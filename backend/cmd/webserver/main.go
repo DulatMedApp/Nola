@@ -1,14 +1,11 @@
 package main
 
 import (
-
-	// Импорт вашего файла конфигурации
-
 	"log"
+	"net/http"
 
 	"github.com/DulatMedApp/Nola/backend/cmd/db"
 	"github.com/DulatMedApp/Nola/backend/cmd/internal/handlers"
-	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -19,11 +16,13 @@ func main() {
 	}
 	defer dbInstance.Close()
 
-	r := gin.Default()
+	// Создание маршрутов без использования Gin
+	mux := http.NewServeMux()
+	handlers.SetupRoutes(mux)
 
-	//Get from handlers
-	handlers.SetupRoutes(r)
-
-	r.Run(":8080")
-
+	// Начало прослушивания порта
+	err = http.ListenAndServe(":8080", mux)
+	if err != nil {
+		log.Fatal(err)
+	}
 }

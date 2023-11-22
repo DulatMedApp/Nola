@@ -7,5 +7,5 @@ type Psychologist struct {
 	DataOfBirth    string `json: "data_of_birth"`
 	PhoneNumber    string `json: "phone_number"`
 	WorkExperience string `json: "work_experience"`
-	AbourYourself  string `json: "about_yourself"`
+	AboutYourself  string `json: "about_yourself"`
 }
