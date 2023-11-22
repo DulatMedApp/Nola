@@ -3,7 +3,7 @@ package psychology_handlers
 import (
 	"net/http"
 
-	"github.com/DulatMedApp/Nola/backend/cmd/interntal/models"
+	"github.com/DulatMedApp/Nola/backend/cmd/internal/models"
 	"github.com/gin-gonic/gin"
 )
 

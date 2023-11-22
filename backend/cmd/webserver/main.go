@@ -7,7 +7,7 @@ import (
 	"log"
 
 	"github.com/DulatMedApp/Nola/backend/cmd/db"
-	"github.com/DulatMedApp/Nola/backend/cmd/interntal/handlers"
+	"github.com/DulatMedApp/Nola/backend/cmd/internal/handlers"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
 )
