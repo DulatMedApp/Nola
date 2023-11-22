@@ -1,30 +1,29 @@
 package main
 
 import (
-	"database/sql"
-	"fmt"
+
+	// Импорт вашего файла конфигурации
+
 	"log"
 
+	"github.com/DulatMedApp/Nola/backend/cmd/db"
+	"github.com/DulatMedApp/Nola/backend/cmd/interntal/handlers"
+	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/yourusername/yourproject/configs" // Импорт вашего файла конфигурации
 )
 
 func main() {
-	// Формирование строки подключения к базе данных
-	connectionString := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", configs.DBUser, configs.DBPassword, configs.DBHost, configs.DBPort, configs.DBDatabase)
-
-	// Подключение к базе данных
-	db, err := sql.Open("mysql", connectionString)
+	dbInstance, err := db.InitDB()
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer db.Close()
+	defer dbInstance.Close()
 
-	// Попытка установления соединения с базой данных
-	err = db.Ping()
-	if err != nil {
-		log.Fatal(err)
-	}
+	r := gin.Default()
 
-	fmt.Println("Успешное подключение к базе данных!")
+	//Get from handlers
+	handlers.SetupRoutes(r)
+
+	r.Run(":8080")
+
 }
