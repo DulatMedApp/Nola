@@ -7,6 +7,7 @@ import (
 	"github.com/DulatMedApp/Nola/backend/cmd/db"
 	"github.com/DulatMedApp/Nola/backend/cmd/internal/handlers"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/gorilla/mux"
 )
 
 func main() {
@@ -16,13 +17,10 @@ func main() {
 	}
 	defer dbInstance.Close()
 
-	// Создание маршрутов без использования Gin
-	mux := http.NewServeMux()
-	handlers.SetupRoutes(mux)
+	r := mux.NewRouter()
+	// Регистрация обработчиков маршрутов
+	handlers.RegisterHandlers(r)
+	// Запуск сервера на порте :8080
+	log.Fatal(http.ListenAndServe(":8080", r))
 
-	// Начало прослушивания порта
-	err = http.ListenAndServe(":8080", mux)
-	if err != nil {
-		log.Fatal(err)
-	}
 }

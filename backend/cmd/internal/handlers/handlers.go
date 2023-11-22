@@ -1,16 +1,10 @@
 package handlers
 
 import (
-	"net/http"
-
-	psychology_handlers "github.com/DulatMedApp/Nola/backend/cmd/internal/handlers/psychology-handlers"
+	"github.com/gorilla/mux"
 )
 
-func SetupRoutes() http.Handler {
-	mux := http.NewServeMux()
-
-	// example handlers for /psychology/work
-	mux.HandleFunc("/psychology/work/registartion", psychology_handlers.RegistrationPsychologistHandler)
-
-	return mux
+// RegisterHandlers регистрирует обработчики маршрутов
+func RegisterHandlers(r *mux.Router) {
+	r.HandleFunc("/api/name", RegistrationHandler).Methods("POST")
 }
