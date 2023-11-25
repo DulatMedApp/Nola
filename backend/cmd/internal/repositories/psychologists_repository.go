@@ -6,6 +6,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"strings"
 
 	"github.com/DulatMedApp/Nola/backend/cmd/internal/models"
 	"github.com/DulatMedApp/Nola/backend/cmd/internal/sms"
@@ -57,19 +58,60 @@ func CreateNewPshychologist(db *sql.DB, psych models.Psychologist) error {
 }
 
 // GetVerificationCodeFromDatabase возвращает код верификации для указанного номера телефона из базы данных
-func GetVerificationCodeFromDatabase(db *sql.DB, phoneNumber string) (string, error) {
+func GetVerificationCodeFromDatabase(db *sql.DB, phoneNumber string) (string, int, error) {
 	var verificationCode string
+	var id int
 
-	query := "SELECT verification_sms_code FROM psychologists WHERE phone_number = ?"
+	query := "SELECT id, verification_sms_code FROM psychologists WHERE phone_number = ?"
 
 	row := db.QueryRow(query, phoneNumber)
-	err := row.Scan(&verificationCode)
+	err := row.Scan(&id, &verificationCode)
 	if err != nil {
 		if err == sql.ErrNoRows {
-			return "", errors.New("No verification code found for the provided phone number")
+			return "", 0, errors.New("No verification code found for the provided phone number")
 		}
-		return "", err
+		return "", 0, err
 	}
 
-	return verificationCode, nil
+	return verificationCode, id, nil
+}
+
+// UpdateDatabase обновляет записи в базе данных на основе данных из слайса
+func UpdateDatabaseValues(db *sql.DB, data []map[string]interface{}) error {
+	if len(data) == 0 {
+		return errors.New("Empty data provided")
+	}
+
+	// Получаем первую запись в слайсе для извлечения информации о полях
+	firstRecord := data[0]
+
+	// Формируем SQL-запрос для обновления
+	var updateFields []string
+	var updateValues []interface{}
+
+	for key, value := range firstRecord {
+		updateFields = append(updateFields, fmt.Sprintf("%s = ?", key))
+		updateValues = append(updateValues, value)
+	}
+
+	query := fmt.Sprintf("UPDATE psychologists SET %s WHERE id = ?", strings.Join(updateFields, ", "))
+
+	// Обновляем записи в базе данных
+	for _, record := range data {
+		id := record["id"]
+
+		if id == nil {
+			return errors.New("ID is missing in the record")
+		}
+
+		var updateArgs []interface{}
+		updateArgs = append(updateValues, id)
+
+		_, err := db.Exec(query, updateArgs...)
+		if err != nil {
+			return err
+		}
+	}
+
+	return errors.New("Updated Successfully")
 }

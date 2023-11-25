@@ -67,7 +67,7 @@ func VerifyCodeHandler(w http.ResponseWriter, r *http.Request) {
 	clientCode := fmt.Sprintf("%d", psych.Verification_sms_code)
 
 	// Getting sms code from DB to compare
-	dbCode, err := repositories.GetVerificationCodeFromDatabase(db, psych.PhoneNumber)
+	dbCode, id, err := repositories.GetVerificationCodeFromDatabase(db, psych.PhoneNumber)
 	if err != nil {
 		http.Error(w, "Error fetching verification code from database", http.StatusInternalServerError)
 		return
@@ -75,8 +75,20 @@ func VerifyCodeHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Compare sms code from client and DB
 	if clientCode == dbCode {
+
+		// Update column verified in psychologist table
+		data := []map[string]interface{}{
+			{"id": id, "verified": "1"},
+		}
+		err := repositories.UpdateDatabaseValues(db, data)
+		if err != nil {
+			http.Error(w, "DB recors updated SUCCSESSFULLY", http.StatusInternalServerError)
+			return
+		}
+
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte("Verification code CORRECT"))
+
 	} else {
 		w.WriteHeader(http.StatusUnauthorized)
 		w.Write([]byte("Verification code WRONG"))
