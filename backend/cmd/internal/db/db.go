@@ -1,12 +1,10 @@
-// Файл db.go
-
-package db
+package config
 
 import (
 	"database/sql"
 	"fmt"
 
-	"github.com/DulatMedApp/Nola/backend/cmd/configs"
+	configs "github.com/DulatMedApp/Nola/backend/cmd/internal/configs"
 	_ "github.com/go-sql-driver/mysql"
 )
 

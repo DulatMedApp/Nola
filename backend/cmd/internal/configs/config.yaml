@@ -1,0 +1,10 @@
+database:
+  host: localhost
+  port: "3306"
+  user: root
+  password: DulatMedAppNolaDb123!!
+  name: nola_db
+
+sms_credentials:
+  login: your_smsc_login
+  password: your_smsc_password
