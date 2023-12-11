@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/DulatMedApp/Nola/backend/cmd/internal/helpers"
 	"github.com/DulatMedApp/Nola/backend/cmd/internal/models"
 	"github.com/DulatMedApp/Nola/backend/cmd/internal/repositories"
 )
@@ -44,15 +45,11 @@ func CreateNewPshychologistHandler(w http.ResponseWriter, r *http.Request) {
 	err = repositories.CreateNewPsychologist(db, psych)
 
 	if err != nil {
-		http.Error(w, "Failed to create psychologist", http.StatusInternalServerError)
+		helpers.RespondJSON(w, "Failed to create psychologist", http.StatusInternalServerError)
 		return
 	}
 
-	response := "Psychologist created successfully"
-
-	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-	w.WriteHeader(http.StatusCreated)
-	w.Write([]byte(response))
+	helpers.RespondJSON(w, "Psychologist created successfully", http.StatusCreated)
 }
 
 func VerifyCodeHandler(w http.ResponseWriter, r *http.Request) {
@@ -82,12 +79,12 @@ func VerifyCodeHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		err := repositories.UpdateDatabaseValues(db, data)
 		if err != nil {
-			helpers.respondJSON(w, "DB records updated successfully", http.StatusInternalServerError)
+			helpers.RespondJSON(w, "DB records updated successfully", http.StatusInternalServerError)
 			return
 		}
 
-		helpers.respondJSON(w, "Verification code CORRECT", http.StatusOK)
+		helpers.RespondJSON(w, "Verification code CORRECT", http.StatusOK)
 	} else {
-		helpers.respondJSON(w, "Verification code WRONG", http.StatusUnauthorized)
+		helpers.RespondJSON(w, "Verification code WRONG", http.StatusUnauthorized)
 	}
 }

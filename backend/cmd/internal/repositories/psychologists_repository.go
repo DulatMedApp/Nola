@@ -10,7 +10,6 @@ import (
 	"time"
 
 	"github.com/DulatMedApp/Nola/backend/cmd/internal/models"
-	"github.com/DulatMedApp/Nola/backend/cmd/internal/sms"
 )
 
 // GetAllPsychologists возвращает список всех психологов из базы данных
@@ -26,13 +25,13 @@ func GetAllPsychologists(db *sql.DB) ([]models.Psychologist, error) {
 	var psychologists []models.Psychologist
 
 	// Итерируемся по результатам запроса и заполняем слайс с психологами
-	for rows.Next() {
-		var psych models.Psychologist
-		if err := rows.Scan(&psych.ID, &psych.Name, &psych.Surname, &psych.Email, &psych.DateOfBirth, &psych.PhoneNumber, &psych.AboutPsychologist); err != nil {
-			return nil, err
-		}
-		psychologists = append(psychologists, psych)
-	}
+	// for rows.Next() {
+	// 	var psych models.Psychologist
+	// 	if err := rows.Scan(&psych.ID, &psych.Name, &psych.Surname, &psych.Email, &psych.DateOfBirth, &psych.PhoneNumber, &psych.AboutPsychologist); err != nil {
+	// 		return nil, err
+	// 	}
+	// 	psychologists = append(psychologists, psych)
+	// }
 	if err := rows.Err(); err != nil {
 		return nil, err
 	}
@@ -41,38 +40,42 @@ func GetAllPsychologists(db *sql.DB) ([]models.Psychologist, error) {
 }
 
 func CreateNewPsychologist(db *sql.DB, psych models.Psychologist) error {
-	// Check if the email or phone number already exists
-	query := "SELECT COUNT(*) FROM psychologists WHERE email = ? OR phone_number = ?"
-	var count int
-	err := db.QueryRow(query, psych.Email, psych.PhoneNumber).Scan(&count)
+
+	//Begining transaction
+	tx, err := db.Begin()
 	if err != nil {
 		return err
 	}
-	if count > 0 {
-		return errors.New("User with this email or phone number already exists")
-	}
+
+	//Rollback in case of error
+	defer func() {
+		if r := recover(); r != nil {
+			tx.Rollback()
+		}
+	}()
 
 	// Create a new record in the user_credentials table
-	userCredentialsID, err := CreateUserCredentials(db, psych.Email, "hashed_password_here") // Replace "hashed_password_here" with the hashed password
+	userCredentialsID, err := CreateUserCredentials(tx, psych.Email, psych.PhoneNumber, "hashed_password_here") // Replace "hashed_password_here" with the hashed password
 	if err != nil {
+		fmt.Println("Error creating user credentials:", err)
 		return err
 	}
 
-	// Prepare query to insert in DB
 	insertQuery := `
-		INSERT INTO psychologists(user_credentials_id, name, surname, email, date_of_birth, phone_number, about_psychologist, experience_years, raiting, created_time, updated_time)
-		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-		`
-
-	verificationCode := sms.GenerateVerificationCode()
-
-	_, err = sms.SendSMS(psych.PhoneNumber, fmt.Sprintf("Your verification code is: %s", verificationCode))
-	if err != nil {
-		return err
-	}
+	INSERT INTO psychologists (user_credentials_id, name, surname, date_of_birth, city, about_psychologist, experience_years, raiting, created_time, updated_time)
+	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+`
 
 	// Insert new user data into the database
-	_, err = db.Exec(insertQuery, userCredentialsID, psych.Name, psych.Surname, psych.Email, psych.DateOfBirth, psych.PhoneNumber, psych.AboutPsychologist, psych.ExperienceYears, psych.Raiting, time.Now(), time.Now())
+	_, err = tx.Exec(insertQuery, userCredentialsID, psych.Name, psych.Surname, psych.DateOfBirth, psych.City, psych.AboutPsychologist, psych.ExperienceYears, 0.0, time.Now(), time.Now())
+	if err != nil {
+		fmt.Println("Error inserting into psychologist table:", err)
+		tx.Rollback()
+		return err
+	}
+
+	//In case of creating NewPsychologist, commit transaction
+	err = tx.Commit()
 	if err != nil {
 		return err
 	}

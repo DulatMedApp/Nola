@@ -7,11 +7,12 @@ type Psychologist struct {
 	Name                  string  `json:"name"`
 	Surname               string  `json:"surname"`
 	Email                 string  `json:"email"`
-	DateOfBirth           string  `json:"date_of_birth"`
 	PhoneNumber           string  `json:"phone_number"`
+	DateOfBirth           string  `json:"date_of_birth"`
+	City                  string  `json:"city"`
 	AboutPsychologist     string  `json:"about_psychologist"`
 	ExperienceYears       int     `json:"experience_years"`
 	Raiting               float64 `json:"raiting"`
-	Veryfied              bool    `json:"verified"`
+	Veryfied              int     `json:"verified"`
 	Verification_sms_code int     `json:"verification_sms_code"`
 }
