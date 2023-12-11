@@ -24,6 +24,6 @@ func SetupRouter() *mux.Router {
 	r.HandleFunc("/api/pshychologist/create", handlers.CreateNewPshychologistHandler).Methods(http.MethodPost)
 
 	//Route for check sms verification
-	r.HandleFunc("/api/verify-code", handlers.VerifyCodeHandler).Methods(http.MethodPost)
+	r.HandleFunc("/api/verify-sms-code", handlers.VerifySmsCodeHandler).Methods(http.MethodPost)
 	return r
 }
