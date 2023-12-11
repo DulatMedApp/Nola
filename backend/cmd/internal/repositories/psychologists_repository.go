@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/DulatMedApp/Nola/backend/cmd/internal/models"
 	"github.com/DulatMedApp/Nola/backend/cmd/internal/sms"
@@ -39,17 +40,39 @@ func GetAllPsychologists(db *sql.DB) ([]models.Psychologist, error) {
 	return psychologists, nil
 }
 
-func CreateNewPshychologist(db *sql.DB, psych models.Psychologist) error {
+func CreateNewPsychologist(db *sql.DB, psych models.Psychologist) error {
+	// Check if the email or phone number already exists
+	query := "SELECT COUNT(*) FROM psychologists WHERE email = ? OR phone_number = ?"
+	var count int
+	err := db.QueryRow(query, psych.Email, psych.PhoneNumber).Scan(&count)
+	if err != nil {
+		return err
+	}
+	if count > 0 {
+		return errors.New("User with this email or phone number already exists")
+	}
+
+	// Create a new record in the user_credentials table
+	userCredentialsID, err := CreateUserCredentials(db, psych.Email, "hashed_password_here") // Replace "hashed_password_here" with the hashed password
+	if err != nil {
+		return err
+	}
 
 	// Prepare query to insert in DB
-	query := "INSERT INTO psychologists(name, surname, email, date_of_birth, phone_number, about_psychologist, experience_years, verification_sms_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+	insertQuery := `
+		INSERT INTO psychologists(user_credentials_id, name, surname, email, date_of_birth, phone_number, about_psychologist, experience_years, raiting, created_time, updated_time)
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		`
 
 	verificationCode := sms.GenerateVerificationCode()
 
-	_, err := sms.SendSMS(psych.PhoneNumber, fmt.Sprintf("Your verification code is: %s", verificationCode))
+	_, err = sms.SendSMS(psych.PhoneNumber, fmt.Sprintf("Your verification code is: %s", verificationCode))
+	if err != nil {
+		return err
+	}
 
-	// Теперь выполняем запрос на вставку данных в таблицу
-	_, err = db.Exec(query, psych.Name, psych.Surname, psych.Email, psych.DateOfBirth, psych.PhoneNumber, psych.AboutPsychologist, psych.ExperienceYears, verificationCode)
+	// Insert new user data into the database
+	_, err = db.Exec(insertQuery, userCredentialsID, psych.Name, psych.Surname, psych.Email, psych.DateOfBirth, psych.PhoneNumber, psych.AboutPsychologist, psych.ExperienceYears, psych.Raiting, time.Now(), time.Now())
 	if err != nil {
 		return err
 	}

@@ -3,13 +3,22 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 
 	config "github.com/DulatMedApp/Nola/backend/cmd/internal/db"
 	"github.com/DulatMedApp/Nola/backend/cmd/internal/routers"
 	_ "github.com/go-sql-driver/mysql" // MySQL driver
+	"github.com/rs/zerolog"
 )
 
 func main() {
+
+	// Инициализация zerolog логгера
+	logger := zerolog.New(os.Stderr).With().Timestamp().Logger()
+
+	// Установка zerolog как логгера по умолчанию для пакета log
+	log.SetFlags(0)
+	log.SetOutput(logger)
 
 	// Connecting to DB
 	db, err := config.InitDB()

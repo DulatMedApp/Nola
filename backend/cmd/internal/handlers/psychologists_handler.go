@@ -41,15 +41,18 @@ func CreateNewPshychologistHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Вызываем функцию создания нового психолога в базе данных
-	err = repositories.CreateNewPshychologist(db, psych)
+	err = repositories.CreateNewPsychologist(db, psych)
+
 	if err != nil {
 		http.Error(w, "Failed to create psychologist", http.StatusInternalServerError)
 		return
 	}
 
-	// Отправляем успешный статус в ответ на запрос
+	response := "Psychologist created successfully"
+
+	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
 	w.WriteHeader(http.StatusCreated)
-	fmt.Fprintln(w, "Psychologist created successfully")
+	w.Write([]byte(response))
 }
 
 func VerifyCodeHandler(w http.ResponseWriter, r *http.Request) {
@@ -73,24 +76,18 @@ func VerifyCodeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Compare sms code from client and DB
 	if clientCode == dbCode {
-
-		// Update column verified in psychologist table
 		data := []map[string]interface{}{
 			{"id": id, "verified": "1"},
 		}
 		err := repositories.UpdateDatabaseValues(db, data)
 		if err != nil {
-			http.Error(w, "DB recors updated SUCCSESSFULLY", http.StatusInternalServerError)
+			helpers.respondJSON(w, "DB records updated successfully", http.StatusInternalServerError)
 			return
 		}
 
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("Verification code CORRECT"))
-
+		helpers.respondJSON(w, "Verification code CORRECT", http.StatusOK)
 	} else {
-		w.WriteHeader(http.StatusUnauthorized)
-		w.Write([]byte("Verification code WRONG"))
+		helpers.respondJSON(w, "Verification code WRONG", http.StatusUnauthorized)
 	}
 }
