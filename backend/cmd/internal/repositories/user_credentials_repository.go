@@ -47,8 +47,6 @@ func CheckUserExist(db *sql.DB, phoneNumber string) (int64, error) {
 
 }
 
-asd
-
 // GetAllUsers возвращает список всех психологов из базы данных
 func GetAllUsers(db *sql.DB) ([]models.User_credentials, error) {
 	// Request to DB to get all users
