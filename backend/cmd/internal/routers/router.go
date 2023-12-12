@@ -29,5 +29,11 @@ func SetupRouter() *mux.Router {
 	//Route for send SMS if user exist
 	r.HandleFunc("/api/send-sms/user-exist", handlers.SendSmsUserExistHandler).Methods(http.MethodPost)
 
+	//Route to get all users
+	r.HandleFunc("/api/users/all", handlers.GetAllUsers).Methods(http.MethodGet)
+
+	// //Route for update user password
+	// r.HandleFunc("/api/update/user", handlers.UpdateUserPassword).Methods(http.MethodPost)
+
 	return r
 }

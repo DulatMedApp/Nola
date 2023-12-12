@@ -14,6 +14,18 @@ import (
 	"github.com/DulatMedApp/Nola/backend/cmd/internal/sms"
 )
 
+func GetAllUsers(w http.ResponseWriter, r *http.Request) {
+	db := r.Context().Value("db").(*sql.DB)
+
+	users, err := repositories.GetAllUsers(db)
+	if err != nil {
+		helpers.RespondJSON(w, "Unable to fetch users", http.StatusInternalServerError)
+		return
+	}
+
+	helpers.RespondJSON(w, users, http.StatusOK)
+}
+
 func VerifySmsCodeHandler(w http.ResponseWriter, r *http.Request) {
 	db := r.Context().Value("db").(*sql.DB)
 
@@ -55,14 +67,14 @@ func SendSmsUserExistHandler(w http.ResponseWriter, r *http.Request) {
 
 	db := r.Context().Value("db").(*sql.DB)
 
-	var pnumber models.User_credentials
+	var pNumber models.User_credentials
 
-	err := json.NewDecoder(r.Body).Decode(&pnumber)
+	err := json.NewDecoder(r.Body).Decode(&pNumber)
 	if err != nil {
 		helpers.RespondJSON(w, "Invalid JSON data", http.StatusBadRequest)
 	}
 
-	dbUserExist, err := repositories.CheckUserExist(db, pnumber.PhoneNumber)
+	dbUserExist, err := repositories.CheckUserExist(db, pNumber.PhoneNumber)
 	if err != nil {
 		helpers.RespondJSON(w, "Error fetching user from database", http.StatusInternalServerError)
 		return
@@ -71,7 +83,7 @@ func SendSmsUserExistHandler(w http.ResponseWriter, r *http.Request) {
 	if dbUserExist == 1 {
 		verificationCode := sms.GenerateVerificationCode()
 
-		_, err = sms.SendSMS(pnumber.PhoneNumber, fmt.Sprintf("Your verification code is: %s", verificationCode))
+		_, err = sms.SendSMS(pNumber.PhoneNumber, fmt.Sprintf("Your verification code is: %s", verificationCode))
 		if err != nil {
 			helpers.RespondJSON(w, "SMS NOT send to user", http.StatusInternalServerError)
 		}
@@ -81,3 +93,17 @@ func SendSmsUserExistHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 }
+
+// func UpdateUserPassword(w http.ResponseWriter, r *http.Request) {
+// 	db := r.Context().Value("db").(*sql.DB)
+
+// 	var user models.User_credentials
+
+// 	err := json.NewDecoder(r.Body).Decode(&user)
+// 	if err != nil {
+// 		helpers.RespondJSON(w, "Invalid JSON data", http.StatusBadRequest)
+// 	}
+
+// 	dbUserUpdate, err := repositories.UpdateUserPassword(db, user.PhoneNumber, user.Password, user.ConfirmedPassword)
+
+// }

@@ -7,14 +7,15 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/DulatMedApp/Nola/backend/cmd/internal/helpers"
 	"github.com/DulatMedApp/Nola/backend/cmd/internal/models"
 	"github.com/DulatMedApp/Nola/backend/cmd/internal/sms"
 )
 
 // GetAllPsychologists возвращает список всех психологов из базы данных
 func GetAllPsychologists(db *sql.DB) ([]models.Psychologist, error) {
-	// Выполняем запрос к базе данных для получения списка психологов
-	rows, err := db.Query("SELECT id, name, surname, email, date_of_birth, phone_number, about_psychologist, experience_years FROM psychologists")
+	// Request to DB to get all psychologists
+	rows, err := db.Query("SELECT psychologist_id, user_credentials_id, name, surname, date_of_birth, city, about_psychologist, experience_years, raiting, created_at, updated_at FROM psychologists")
 	if err != nil {
 		return nil, err
 	}
@@ -23,16 +24,29 @@ func GetAllPsychologists(db *sql.DB) ([]models.Psychologist, error) {
 	// Создаем слайс для хранения результатов
 	var psychologists []models.Psychologist
 
-	//Итерируемся по результатам запроса и заполняем слайс с психологами
+	// Итерируемся по результатам запроса и заполняем слайс с психологами
 	for rows.Next() {
 		var psych models.Psychologist
-		if err := rows.Scan(&psych.ID, &psych.Name, &psych.Surname, &psych.Email, &psych.DateOfBirth, &psych.PhoneNumber, &psych.AboutPsychologist); err != nil {
+		var createdTime, updatedTime []uint8 // интерфейс для сканирования []uint8 времени из базы данных
+
+		if err := rows.Scan(&psych.ID, &psych.Name, &psych.Surname, &psych.DateOfBirth, &psych.PhoneNumber, &psych.City, &psych.AboutPsychologist, &psych.ExperienceYears, &psych.Rating, &createdTime, &updatedTime); err != nil {
 			return nil, err
 		}
+
+		// Преобразование []uint8 времени в *time.Time с помощью нашей функции scanTime
+		parsedCreatedTime, err := helpers.ScanTime(createdTime)
+		if err != nil {
+			return nil, err
+		}
+		parsedUpdatedTime, err := helpers.ScanTime(updatedTime)
+		if err != nil {
+			return nil, err
+		}
+
+		psych.CreatedAt = parsedCreatedTime
+		psych.UpdatedAt = parsedUpdatedTime
+
 		psychologists = append(psychologists, psych)
-	}
-	if err := rows.Err(); err != nil {
-		return nil, err
 	}
 
 	return psychologists, nil

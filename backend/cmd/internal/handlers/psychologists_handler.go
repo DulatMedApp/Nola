@@ -19,15 +19,11 @@ func GetAllPsychologistsHandler(w http.ResponseWriter, r *http.Request) {
 
 	psychologists, err := repositories.GetAllPsychologists(db)
 	if err != nil {
-		http.Error(w, "Unable to fetch psychologists", http.StatusInternalServerError)
+		helpers.RespondJSON(w, "Unable to fetch psychologists", http.StatusInternalServerError)
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(psychologists); err != nil {
-		http.Error(w, "Failed to encode psychologists data", http.StatusInternalServerError)
-		return
-	}
+	helpers.RespondJSON(w, psychologists, http.StatusOK)
 }
 
 func CreateNewPshychologistHandler(w http.ResponseWriter, r *http.Request) {

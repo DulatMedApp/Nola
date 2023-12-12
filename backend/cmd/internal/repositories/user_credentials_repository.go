@@ -6,9 +6,29 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"log"
 	"strings"
 	"time"
+
+	"github.com/DulatMedApp/Nola/backend/cmd/internal/helpers"
+	"github.com/DulatMedApp/Nola/backend/cmd/internal/models"
 )
+
+// func UpdateUserPassword(db *sql.DB, phoneNumber, password, confirmedPassword string) (int64, error) {
+// 	query := "SELECT COUNT(*) FROM user_credentials WHERE phone_number = ?"
+// 	var count int
+
+// 	err := db.QueryRow(query, phoneNumber).Scan(&count)
+
+// 	if err != nil {
+// 		return 1, err
+// 	}
+// 	if count > 0 {
+
+// 	} else {
+// 		return 0, err
+// 	}
+// }
 
 func CheckUserExist(db *sql.DB, phoneNumber string) (int64, error) {
 	query := "SELECT COUNT(*) FROM user_credentials WHERE phone_number = ?"
@@ -25,6 +45,47 @@ func CheckUserExist(db *sql.DB, phoneNumber string) (int64, error) {
 		return 0, err
 	}
 
+}
+
+// GetAllUsers возвращает список всех психологов из базы данных
+func GetAllUsers(db *sql.DB) ([]models.User_credentials, error) {
+	// Request to DB to get all users
+	rows, err := db.Query("SELECT * FROM nola_db.user_credentials")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	// Создаем слайс для хранения результатов
+	var users []models.User_credentials
+
+	// Итерируемся по результатам запроса и заполняем слайс с психологами
+	for rows.Next() {
+		var user models.User_credentials
+		var createdTime, updatedTime []uint8 // интерфейс для сканирования []uint8 времени из базы данных
+
+		if err := rows.Scan(&user.ID, &user.PhoneNumber, &user.Email, &user.Password, &user.VerificationSmsCode, &user.SmsSendTime, &user.Role, &user.Verified, &createdTime, &updatedTime); err != nil {
+			log.Println("Error scanning row:", err)
+			return nil, err
+		}
+
+		// Преобразование []uint8 времени в *time.Time с помощью нашей функции scanTime
+		parsedCreatedTime, err := helpers.ScanTime(createdTime)
+		if err != nil {
+			return nil, err
+		}
+		parsedUpdatedTime, err := helpers.ScanTime(updatedTime)
+		if err != nil {
+			return nil, err
+		}
+
+		user.CreatedAt = parsedCreatedTime
+		user.UpdatedAt = parsedUpdatedTime
+
+		users = append(users, user)
+	}
+
+	return users, nil
 }
 
 func CreateUserCredentials(tx *sql.Tx, email, phoneNumber, password string) (int64, error) {
@@ -46,6 +107,7 @@ func CreateUserCredentials(tx *sql.Tx, email, phoneNumber, password string) (int
 	updatedAt := time.Now()
 	sms_send_time := time.Now()
 	role := "specialist"
+
 	result, err := tx.Exec(userCredentialsInsert, phoneNumber, email, password, sms_send_time, role, verified, createdAt, updatedAt)
 
 	if err != nil {
