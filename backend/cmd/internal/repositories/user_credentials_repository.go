@@ -10,6 +10,23 @@ import (
 	"time"
 )
 
+func CheckUserExist(db *sql.DB, phoneNumber string) (int64, error) {
+	query := "SELECT COUNT(*) FROM user_credentials WHERE phone_number = ?"
+	var count int
+
+	err := db.QueryRow(query, phoneNumber).Scan(&count)
+
+	if err != nil {
+		return 0, err
+	}
+	if count > 0 {
+		return 1, err
+	} else {
+		return 0, err
+	}
+
+}
+
 func CreateUserCredentials(tx *sql.Tx, email, phoneNumber, password string) (int64, error) {
 
 	// Check if the email or phone number already exists

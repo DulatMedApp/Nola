@@ -26,8 +26,8 @@ func SetupRouter() *mux.Router {
 	//Route for check sms verification
 	r.HandleFunc("/api/verify-sms-code", handlers.VerifySmsCodeHandler).Methods(http.MethodPost)
 
-	//Route when forget password
-	r.HandleFunc("api/forgot-password", handlers.UserForgotPassword).Methods(http.MethodPost)
+	//Route for send SMS if user exist
+	r.HandleFunc("/api/send-sms/user-exist", handlers.SendSmsUserExistHandler).Methods(http.MethodPost)
 
 	return r
 }

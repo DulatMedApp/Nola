@@ -51,11 +51,33 @@ func VerifySmsCodeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func UserForgotPassword(w http.ResponseWriter, r *http.Request) {
+func SendSmsUserExistHandler(w http.ResponseWriter, r *http.Request) {
+
 	db := r.Context().Value("db").(*sql.DB)
 
 	var pnumber models.User_credentials
 
 	err := json.NewDecoder(r.Body).Decode(&pnumber)
+	if err != nil {
+		helpers.RespondJSON(w, "Invalid JSON data", http.StatusBadRequest)
+	}
+
+	dbUserExist, err := repositories.CheckUserExist(db, pnumber.PhoneNumber)
+	if err != nil {
+		helpers.RespondJSON(w, "Error fetching user from database", http.StatusInternalServerError)
+		return
+	}
+
+	if dbUserExist == 1 {
+		verificationCode := sms.GenerateVerificationCode()
+
+		_, err = sms.SendSMS(pnumber.PhoneNumber, fmt.Sprintf("Your verification code is: %s", verificationCode))
+		if err != nil {
+			helpers.RespondJSON(w, "SMS NOT send to user", http.StatusInternalServerError)
+		}
+		helpers.RespondJSON(w, "SMS sent to user SUCCESSFULLY", http.StatusOK)
+	} else {
+		helpers.RespondJSON(w, "No user found with this phone number", http.StatusInternalServerError)
+	}
 
 }
