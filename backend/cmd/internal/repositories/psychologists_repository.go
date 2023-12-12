@@ -23,14 +23,14 @@ func GetAllPsychologists(db *sql.DB) ([]models.Psychologist, error) {
 	// Создаем слайс для хранения результатов
 	var psychologists []models.Psychologist
 
-	// Итерируемся по результатам запроса и заполняем слайс с психологами
-	// for rows.Next() {
-	// 	var psych models.Psychologist
-	// 	if err := rows.Scan(&psych.ID, &psych.Name, &psych.Surname, &psych.Email, &psych.DateOfBirth, &psych.PhoneNumber, &psych.AboutPsychologist); err != nil {
-	// 		return nil, err
-	// 	}
-	// 	psychologists = append(psychologists, psych)
-	// }
+	//Итерируемся по результатам запроса и заполняем слайс с психологами
+	for rows.Next() {
+		var psych models.Psychologist
+		if err := rows.Scan(&psych.ID, &psych.Name, &psych.Surname, &psych.Email, &psych.DateOfBirth, &psych.PhoneNumber, &psych.AboutPsychologist); err != nil {
+			return nil, err
+		}
+		psychologists = append(psychologists, psych)
+	}
 	if err := rows.Err(); err != nil {
 		return nil, err
 	}
@@ -54,7 +54,7 @@ func CreateNewPsychologist(db *sql.DB, psych models.Psychologist) error {
 	}()
 
 	// Create a new record in the user_credentials table
-	userCredentialsID, err := CreateUserCredentials(tx, psych.Email, psych.PhoneNumber, "hashed_password_here") // Replace "hashed_password_here" with the hashed password
+	userCredentialsID, err := CreateUserCredentials(tx, psych.Email, psych.PhoneNumber, psych.Password)
 	if err != nil {
 		fmt.Println("Error creating user credentials:", err)
 		return err

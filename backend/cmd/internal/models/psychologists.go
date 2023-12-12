@@ -8,6 +8,7 @@ type Psychologist struct {
 	Surname             string  `json:"surname"`
 	Email               string  `json:"email"`
 	PhoneNumber         string  `json:"phone_number"`
+	Password            string  `json:"password"`
 	DateOfBirth         string  `json:"date_of_birth"`
 	City                string  `json:"city"`
 	AboutPsychologist   string  `json:"about_psychologist"`

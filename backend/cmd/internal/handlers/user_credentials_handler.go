@@ -50,3 +50,12 @@ func VerifySmsCodeHandler(w http.ResponseWriter, r *http.Request) {
 		helpers.RespondJSON(w, "Verification code WRONG", http.StatusUnauthorized)
 	}
 }
+
+func UserForgotPassword(w http.ResponseWriter, r *http.Request) {
+	db := r.Context().Value("db").(*sql.DB)
+
+	var pnumber models.User_credentials
+
+	err := json.NewDecoder(r.Body).Decode(&pnumber)
+
+}
