@@ -38,7 +38,6 @@ func CreateNewPshychologistHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//Hash password before saving in DB
-
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(psych.Password), bcrypt.DefaultCost)
 	if err != nil {
 		helpers.RespondJSON(w, "Failed to hash password", http.StatusInternalServerError)

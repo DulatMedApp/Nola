@@ -15,7 +15,7 @@ import (
 // GetAllPsychologists возвращает список всех психологов из базы данных
 func GetAllPsychologists(db *sql.DB) ([]models.Psychologist, error) {
 	// Request to DB to get all psychologists
-	rows, err := db.Query("SELECT psychologist_id, user_credentials_id, name, surname, date_of_birth, city, about_psychologist, experience_years, raiting, created_at, updated_at FROM psychologists")
+	rows, err := db.Query("SELECT psychologist_id, user_credentials_id, name, surname, date_of_birth, city, about_psychologist, experience_years, rating, created_at, updated_at FROM psychologists")
 	if err != nil {
 		return nil, err
 	}
@@ -70,17 +70,16 @@ func CreateNewPsychologist(db *sql.DB, psych models.Psychologist) error {
 	// Create a new record in the user_credentials table
 	userCredentialsID, err := CreateUserCredentials(tx, psych.Email, psych.PhoneNumber, psych.Password)
 	if err != nil {
-		fmt.Println("Error creating user credentials:", err)
 		return err
 	}
 
 	insertQuery := `
-	INSERT INTO psychologists (user_credentials_id, name, surname, date_of_birth, city, about_psychologist, experience_years, raiting, created_time, updated_time)
-	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+	INSERT INTO psychologists (user_credentials_id, name, surname, date_of_birth, gender, city, about_psychologist, experience_years, raiting, initial_reg_complete, created_at, updated_at)
+	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 `
 
 	// Insert new user data into the database
-	_, err = tx.Exec(insertQuery, userCredentialsID, psych.Name, psych.Surname, psych.DateOfBirth, psych.City, psych.AboutPsychologist, psych.ExperienceYears, 0.0, time.Now(), time.Now())
+	_, err = tx.Exec(insertQuery, userCredentialsID, psych.Name, psych.Surname, psych.DateOfBirth, psych.Gender, psych.City, psych.AboutPsychologist, psych.ExperienceYears, psych.InitialRegComplete, 0.0, time.Now(), time.Now())
 	if err != nil {
 		fmt.Println("Error inserting into psychologist table:", err)
 		tx.Rollback()

@@ -13,9 +13,11 @@ type Psychologist struct {
 	PhoneNumber         string     `json:"phone_number"`
 	Password            string     `json:"password"`
 	DateOfBirth         string     `json:"date_of_birth"`
+	Gender              string     `json:"gender"`
 	City                string     `json:"city"`
 	AboutPsychologist   string     `json:"about_psychologist"`
 	ExperienceYears     int        `json:"experience_years"`
+	InitialRegComplete  int        `json:"initial_reg_complete"`
 	Verified            int        `json:"verified"`
 	VerificationSmsCode int        `json:"verification_sms_code"`
 	Rating              float64    `json:"raiting"`    // исправлено на правильное имя поля
