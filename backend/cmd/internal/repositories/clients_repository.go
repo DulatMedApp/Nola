@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"strconv"
 	"time"
 
 	"github.com/DulatMedApp/Nola/backend/cmd/internal/helpers"
@@ -110,4 +111,52 @@ func CreateNewClient(db *sql.DB, client models.Client) error {
 		return err
 	}
 	return err
+}
+
+// DELETE client from DB by ID from URL
+func DeleteClient(db *sql.DB, clientID string) error {
+
+	//Convert clientID to int
+	id, err := strconv.Atoi(clientID)
+	if err != nil {
+		return fmt.Errorf("failed to convert clientID to int: %v", err)
+	}
+
+	tx, err := db.Begin()
+	if err != nil {
+		return fmt.Errorf("failed to begin transaction: %v", err)
+	}
+
+	defer func() {
+		if p := recover(); p != nil {
+			_ = tx.Rollback()
+		}
+	}()
+
+	// Get user_credentials_id from clients table
+	var userCredentialsID string
+	err = tx.QueryRow("SELECT user_credentials_id from clients WHERE client_id = ?", id).Scan(&userCredentialsID)
+	if err != nil {
+		_ = tx.Rollback()
+		return fmt.Errorf("failed to fetch user_credentials_id: %v", err)
+	}
+
+	// Delete data from clients table
+	if _, err := tx.Exec("DELETE FROM clients where client_id = ?", id); err != nil {
+		_ = tx.Rollback()
+		return fmt.Errorf("failed to delete client: %v", err)
+	}
+
+	// Delete data from user_credentials table
+	if _, err := tx.Exec("DELETE FROM user_credentials WHERE user_id = ?", userCredentialsID); err != nil {
+		_ = tx.Rollback()
+		return fmt.Errorf("failed to delete user credentials: %v", err)
+	}
+
+	if err := tx.Commit(); err != nil {
+		return fmt.Errorf("failed to commit transaction: %v", err)
+	}
+
+	return nil
+
 }

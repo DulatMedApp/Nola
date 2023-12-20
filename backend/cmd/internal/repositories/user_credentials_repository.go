@@ -62,9 +62,9 @@ func GetAllUsers(db *sql.DB) ([]models.User_credentials, error) {
 	// Итерируемся по результатам запроса и заполняем слайс с психологами
 	for rows.Next() {
 		var user models.User_credentials
-		var createdTime, updatedTime []uint8 // интерфейс для сканирования []uint8 времени из базы данных
+		var createdTime, updatedTime, smsSentTime []uint8 // интерфейс для сканирования []uint8 времени из базы данных
 
-		if err := rows.Scan(&user.ID, &user.PhoneNumber, &user.Email, &user.Password, &user.VerificationSmsCode, &user.SmsSendTime, &user.Role, &user.Verified, &createdTime, &updatedTime); err != nil {
+		if err := rows.Scan(&user.ID, &user.PhoneNumber, &user.Email, &user.Password, &user.VerificationSmsCode, &smsSentTime, &user.Role, &user.Verified, &createdTime, &updatedTime); err != nil {
 			log.Println("Error scanning row:", err)
 			return nil, err
 		}
@@ -78,9 +78,14 @@ func GetAllUsers(db *sql.DB) ([]models.User_credentials, error) {
 		if err != nil {
 			return nil, err
 		}
+		parsedSmsSendTime, err := helpers.ScanTime(smsSentTime)
+		if err != nil {
+			return nil, err
+		}
 
 		user.CreatedAt = parsedCreatedTime
 		user.UpdatedAt = parsedUpdatedTime
+		user.SmsSendTime = parsedSmsSendTime
 
 		users = append(users, user)
 	}

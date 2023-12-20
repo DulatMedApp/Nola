@@ -32,11 +32,14 @@ func SetupRouter() *mux.Router {
 	//Route to get all users
 	r.HandleFunc("/api/users/all", handlers.GetAllUsers).Methods(http.MethodGet)
 
-	//Route for create a new client
+	//Route for CREATE a new CLIENT
 	r.HandleFunc("/api/client/create", handlers.CreateNewClientHandler).Methods(http.MethodPost)
 
-	// Route for get all clients
+	// Route for GET all CLIENTS
 	r.HandleFunc("/api/clients/all", handlers.GetAllClientsHandler).Methods(http.MethodGet)
+
+	// Route for DELETE CLIENT
+	r.HandleFunc("/api/client/{client_id}", handlers.DeleteClientHandler).Methods(http.MethodDelete)
 
 	// //Route for update user password
 	// r.HandleFunc("/api/update/user", handlers.UpdateUserPassword).Methods(http.MethodPost)
