@@ -6,6 +6,8 @@ import (
 	"os"
 
 	config "github.com/DulatMedApp/Nola/backend/cmd/internal/db"
+	"github.com/DulatMedApp/Nola/backend/cmd/internal/handlers"
+	middleware "github.com/DulatMedApp/Nola/backend/cmd/internal/middlewares"
 	"github.com/DulatMedApp/Nola/backend/cmd/internal/routers"
 	_ "github.com/go-sql-driver/mysql" // MySQL driver
 	"github.com/rs/zerolog"
@@ -19,6 +21,9 @@ func main() {
 	// Установка zerolog как логгера по умолчанию для пакета log
 	log.SetFlags(0)
 	log.SetOutput(logger)
+
+	//create route that requires authentification via JWT
+	http.Handle("/protected", middleware.AuthMiddleware(http.HandlerFunc(handlers.ProtectedHandler)))
 
 	// Connecting to DB
 	db, err := config.InitDB()

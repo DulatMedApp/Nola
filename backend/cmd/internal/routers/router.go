@@ -41,6 +41,9 @@ func SetupRouter() *mux.Router {
 	// Route for DELETE CLIENT
 	r.HandleFunc("/api/client/{client_id}", handlers.DeleteClientHandler).Methods(http.MethodDelete)
 
+	//Route for authentification and get token
+	r.HandleFunc("/api/login", handlers.LoginHandler).Methods(http.MethodPost)
+
 	// //Route for update user password
 	// r.HandleFunc("/api/update/user", handlers.UpdateUserPassword).Methods(http.MethodPost)
 

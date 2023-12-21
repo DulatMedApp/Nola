@@ -79,7 +79,7 @@ func CreateNewClient(db *sql.DB, client models.Client) error {
 	}
 
 	insertQuery := `
-	INSERT INTO clients (user_credentials_id, name, surname,  gender, date_of_birth, city, raiting, created_at, updated_at)
+	INSERT INTO clients (user_credentials_id, name, surname,  gender, date_of_birth, city, rating, created_at, updated_at)
 	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
 	`
 
