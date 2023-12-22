@@ -5,12 +5,45 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/DulatMedApp/Nola/backend/cmd/internal/helpers"
 	"github.com/DulatMedApp/Nola/backend/cmd/internal/models"
 	"github.com/DulatMedApp/Nola/backend/cmd/internal/sms"
 )
+
+// Update Client table
+func UpdateClient(db *sql.DB, clientID string, updateData map[string]interface{}) error {
+	// Формируем запрос для обновления
+	updateQuery := "UPDATE clients SET "
+	var values []interface{}
+
+	// Обходим переданные данные для обновления
+	for key, value := range updateData {
+		updateQuery += fmt.Sprintf("%s=?, ", key)
+		values = append(values, value)
+	}
+
+	// Убираем последнюю запятую и завершаем формирование запроса
+	updateQuery = strings.TrimSuffix(updateQuery, ", ") + " WHERE client_id = ?"
+	values = append(values, clientID)
+
+	// Подготавливаем запрос обновления
+	stmt, err := db.Prepare(updateQuery)
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+
+	// Выполняем запрос обновления
+	_, err = stmt.Exec(values...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
 
 // GetAllClient get list of all client from DB
 func GetAllClients(db *sql.DB) ([]models.Client, error) {

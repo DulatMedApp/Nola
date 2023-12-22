@@ -2,7 +2,9 @@
 
 package models
 
-import "time"
+import (
+	"time"
+)
 
 type Psychologist struct {
 	ID                  int        `json:"id"`

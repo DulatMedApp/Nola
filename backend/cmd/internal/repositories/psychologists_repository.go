@@ -5,12 +5,86 @@ package repositories
 import (
 	"database/sql"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/DulatMedApp/Nola/backend/cmd/internal/helpers"
 	"github.com/DulatMedApp/Nola/backend/cmd/internal/models"
 	"github.com/DulatMedApp/Nola/backend/cmd/internal/sms"
 )
+
+// UpdatePsychologist обновляет данные психолога в базе данных по psychologyID на основе переданных данных
+func UpdatePsychologist(db *sql.DB, psychologistID string, updateData map[string]interface{}) error {
+	// Формируем запрос для обновления
+	updateQuery := "UPDATE psychologists SET "
+	var values []interface{}
+
+	// Обходим переданные данные для обновления
+	for key, value := range updateData {
+		updateQuery += fmt.Sprintf("%s=?, ", key)
+		values = append(values, value)
+	}
+
+	// Убираем последнюю запятую и завершаем формирование запроса
+	updateQuery = strings.TrimSuffix(updateQuery, ", ") + " WHERE psychologist_id = ?"
+	values = append(values, psychologistID)
+
+	// Подготавливаем запрос обновления
+	stmt, err := db.Prepare(updateQuery)
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+
+	// Выполняем запрос обновления
+	_, err = stmt.Exec(values...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// Get one from psychology DB
+func GetPsychologist(db *sql.DB, psychologyID string) ([]models.Psychologist, error) {
+	//request to DB to get one psychology
+	rows, err := db.Query("SELECT psychologist_id, user_credentials_id, name, surname, date_of_birth, city, about_psychologist, experience_years, rating, created_at, updated_at FROM psychologists WHERE psychologist_id = ?", psychologyID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	//Create a slice for store result
+	var psychology []models.Psychologist
+
+	//Fill slice
+	for rows.Next() {
+		var psych models.Psychologist
+		var createdTime, updatedTime []uint8 // интерфейс для сканирования []uint8 времени из базы данных
+
+		if err := rows.Scan(&psych.ID, &psych.Name, &psych.Surname, &psych.DateOfBirth, &psych.PhoneNumber, &psych.City, &psych.AboutPsychologist, &psych.ExperienceYears, &psych.Rating, &createdTime, &updatedTime); err != nil {
+			return nil, err
+		}
+
+		// Преобразование []uint8 времени в *time.Time с помощью нашей функции scanTime
+		parsedCreatedTime, err := helpers.ScanTime(createdTime)
+		if err != nil {
+			return nil, err
+		}
+		parsedUpdatedTime, err := helpers.ScanTime(updatedTime)
+		if err != nil {
+			return nil, err
+		}
+
+		psych.CreatedAt = parsedCreatedTime
+		psych.UpdatedAt = parsedUpdatedTime
+
+		psychology = append(psychology, psych)
+	}
+
+	return psychology, nil
+
+}
 
 // GetAllPsychologists возвращает список всех психологов из базы данных
 func GetAllPsychologists(db *sql.DB) ([]models.Psychologist, error) {
