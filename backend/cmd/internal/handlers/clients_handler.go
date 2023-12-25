@@ -15,20 +15,20 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func GetAllClient(w http.ResponseWriter, r *http.Request) {
-	db := r.Context().Value("db").(*sql.DB)
+// func GetClientHandler(w http.ResponseWriter, r *http.Request) {
+// 	db := r.Context().Value("db").(*sql.DB)
 
-	//Get id from URL
-	clientID := mux.Vars(r)["client_id"]
+// 	//Get id from URL
+// 	clientID := mux.Vars(r)["client_id"]
 
-	client, err := repositories.GetClient(db, clientID)
-	if err != nil {
-		http.Error(w, fmt.Sprintf("Failed to get client: %v", err), http.StatusInternalServerError)
-		return
-	}
-	helpers.RespondJSON(w, client, http.StatusOK)
+// 	client, err := repositories.GetClient(db, clientID)
+// 	if err != nil {
+// 		http.Error(w, fmt.Sprintf("Failed to get client: %v", err), http.StatusInternalServerError)
+// 		return
+// 	}
+// 	helpers.RespondJSON(w, client, http.StatusOK)
 
-}
+// }
 
 func UpdateClientHandler(w http.ResponseWriter, r *http.Request) {
 	db := r.Context().Value("db").(*sql.DB)

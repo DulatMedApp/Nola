@@ -45,7 +45,7 @@ func SetupRouter() *mux.Router {
 	r.HandleFunc("/api/clients/all", handlers.GetAllClientsHandler).Methods(http.MethodGet)
 
 	// Route for GET one client
-	r.HandleFunc("/api/client/{client_id}", handlers.GetClientHandler).Methods(http.MethodGet)
+	// r.HandleFunc("/api/client/{client_id}", handlers.GetClientHandler).Methods(http.MethodGet)
 
 	// Route for UPDATE client
 	r.HandleFunc("/api/client/update/{client_id}", handlers.UpdateClientHandler).Methods(http.MethodPut)
