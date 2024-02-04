@@ -1,0 +1,150 @@
+@import url("https://fonts.googleapis.com/css2?family=Overpass:wght@400;500;600;700&display=swap");
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Overpass", sans-serif;
+}
+
+.home-wrapper-green {
+  width: 100%;
+  height: 760px;
+  background-color: #325343;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  position: relative;
+  text-align: center;
+  padding: 406.5px 686.5px 406.5px 686.5px;
+}
+
+.container-therapy-card {
+  display: block;
+}
+
+.container-cards {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 1170px;
+  height: 440px;
+}
+
+.container-cards h1 {
+  text-align: center;
+  margin: 0 auto;
+  color: #f5f7f5;
+  width: 1140px;
+  height: 56px;
+  font-size: 3rem;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 3.5rem;
+}
+
+.container-card-list {
+  width: 1140px;
+  height: 384px;
+}
+.container-cards-group {
+  width: 1088px;
+  height: 288px;
+  margin-top: 40px;
+  display: flex;
+}
+.container-card-list h2 {
+  width: 70%;
+  margin: 0 auto;
+  padding-top: 1.5rem;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 2rem;
+  text-align: center;
+  display: block;
+  color: #f5f7f5;
+}
+
+.container-cards-group .individual-link {
+  background-color: #325343;
+  margin-top: 0;
+  display: block;
+  border: 1px solid #f5f7f5;
+  border-radius: 10px;
+  width: 346px;
+  height: 288px;
+  background-image: url("home-girl.png");
+  padding: 29px;
+}
+
+.container-cards-group .individual-link .individual-text {
+  width: 286px;
+  height: 40px;
+  font-weight: 400;
+  font-size: 32px;
+  letter-spacing: -0.02em;
+  display: block;
+  color: #f5f7f5;
+  text-align: left;
+  overflow: hidden;
+}
+
+.container-cards-group .couples-link {
+  background-color: #265353;
+  margin-top: 0;
+  display: block;
+  border: 1px solid #f5f7f5;
+  border-radius: 10px;
+  width: 346px;
+  height: 288px;
+  background-image: url("couples-before.png");
+  padding: 29px;
+  margin-left: 25px;
+}
+
+.container-cards-group .couples-link .couples-text {
+  width: 286px;
+  height: 40px;
+  font-weight: 400;
+  font-size: 32px;
+  letter-spacing: -0.02em;
+  display: block;
+  color: #f5f7f5;
+  text-align: left;
+  overflow: hidden;
+}
+
+.container-cards-group .teen-link {
+  background-color: #6f4205;
+  margin-top: 0;
+  display: block;
+  border: 1px solid #f5f7f5;
+  border-radius: 10px;
+  width: 346px;
+  height: 288px;
+  background-image: url("teen_before.png");
+  padding: 29px;
+  margin-left: 25px;
+}
+
+.container-cards-group .teen-link .teen-text {
+  width: 286px;
+  height: 40px;
+  font-weight: 400;
+  font-size: 32px;
+  letter-spacing: -0.02em;
+  display: block;
+  color: #f5f7f5;
+  text-align: left;
+  overflow: hidden;
+}
+
+.wrapper-bottom {
+  background-image: url("home-wrapper-bottom.png");
+  content: "";
+  height: 72px;
+  background-size: 100% 100%;
+  margin-bottom: -844px;
+  position: absolute;
+  width: 100%;
+}
