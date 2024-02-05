@@ -13,6 +13,9 @@ import (
 	"github.com/DulatMedApp/Nola/backend/cmd/internal/sms"
 )
 
+
+
+
 // Update Client table
 func UpdateClient(db *sql.DB, clientID string, updateData map[string]interface{}) error {
 	// Формируем запрос для обновления

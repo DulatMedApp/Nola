@@ -36,20 +36,26 @@ func UpdateClientHandler(w http.ResponseWriter, r *http.Request) {
 	//Get data from JSON
 	var updateData map[string]interface{}
 	err := json.NewDecoder(r.Body).Decode(&updateData)
+
 	if err != nil {
+
 		helpers.RespondJSON(w, "Invalid JSON data", http.StatusBadRequest)
 		return
+
 	}
 
 	//Get ID from URL
+
 	clientID := mux.Vars(r)["client_id"]
 
 	//Update data in DB
 	err = repositories.UpdateClient(db, clientID, updateData)
 	if err != nil {
+
 		helpers.RespondJSON(w, "Unable to Update Client", http.StatusInternalServerError)
 		return
 	}
+
 	helpers.RespondJSON(w, "Client updated successgully", http.StatusOK)
 
 }
@@ -90,8 +96,10 @@ func CreateNewClientHandler(w http.ResponseWriter, r *http.Request) {
 	err = repositories.CreateNewClient(db, client)
 
 	if err != nil {
-		helpers.RespondJSON(w, "Failed to create client", http.StatusInternalServerError)
+		helpers.RespondJSON(w, "Failed to create client", http.
+			StatusInternalServerError)
 		return
+
 	}
 
 	helpers.RespondJSON(w, "Client created successfully", http.StatusCreated)

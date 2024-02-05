@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "vue": "^3.3.13"
+    "create-react-app": "^5.0.1"
   }
 }

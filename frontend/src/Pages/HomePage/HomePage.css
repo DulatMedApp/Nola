@@ -1,9 +1,13 @@
-@import url("https://fonts.googleapis.com/css2?family=Overpass:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Overpass:wght@300;400;500;600;700&display=swap");
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   font-family: "Overpass", sans-serif;
+}
+
+.home-wrapper-green-main {
+  padding-top: 100px;
 }
 
 .home-wrapper-green {
@@ -15,7 +19,17 @@
   display: flex;
   position: relative;
   text-align: center;
-  padding: 406.5px 686.5px 406.5px 686.5px;
+  /* padding: 406.5px 686.5px 406.5px 594.5px; */
+}
+.home-wrapper-green::after {
+  background-image: url("home-wrapper-bottom.png");
+  content: "";
+  height: 72px;
+  background-size: 100% 100%;
+  margin-bottom: -793px;
+  width: 100%;
+  background-repeat: no-repeat;
+  position: absolute;
 }
 
 .container-therapy-card {
@@ -27,7 +41,8 @@
   margin-right: auto;
   padding-left: 15px;
   padding-right: 15px;
-  width: 1170px;
+  /* width: 1170px; */
+  width: 100%;
   height: 440px;
 }
 
@@ -139,12 +154,268 @@
   overflow: hidden;
 }
 
-.wrapper-bottom {
-  background-image: url("home-wrapper-bottom.png");
-  content: "";
-  height: 72px;
-  background-size: 100% 100%;
-  margin-bottom: -844px;
+.down-arrow {
+  z-index: 2;
   position: absolute;
+  bottom: 10px;
+  left: 50%;
+  background-image: url("down-arrow.png");
+  width: 30px;
+  height: 30px;
+}
+
+.home-wrapper-numbers {
+  background-color: #fffcf6;
+  padding: 3rem 0 10rem;
+  display: block;
   width: 100%;
+  height: 528px;
+}
+
+.container-numbers {
+  width: 1170px;
+  height: 320px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.container-numbers-blocks {
+  width: 1140px;
+  height: 320px;
+  display: flex;
+  grid-column-gap: 126px;
+}
+
+.container-numbers-blocks h2 {
+  width: 507px;
+  height: 320px;
+  padding: 4rem 0 0 5rem;
+  font-size: 3rem;
+  font-weight: 300;
+  line-height: 3.5rem;
+  position: relative;
+}
+.container-numbers-blocks h2::after {
+  content: "";
+  width: 72px;
+  height: 108px;
+  background-image: url("line-burst-green.png");
+  position: absolute;
+  background-size: 100% 100%;
+  top: 0;
+  left: 0;
+}
+
+.container-numbers-blocks span {
+  color: #397a4a;
+}
+
+.container-number-blocks-counters {
+  width: 507px;
+  height: 320px;
+}
+.container-counter-first {
+  padding: 1rem 0;
+  border-bottom: 1px solid #c3c8c1;
+}
+.container-counter-first p {
+  color: #397a4a;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 2.5rem;
+  display: inline-block;
+}
+
+.container-counter-first span {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 2rem;
+  color: black;
+}
+
+.top-curved {
+  z-index: 2;
+  margin-top: -5.25rem;
+  padding-top: 84px;
+  position: relative;
+  overflow: hidden;
+}
+
+.top-curved::before {
+  content: "";
+  height: 84px;
+  background: #f7f0e6;
+  border-radius: 50% 50% 0 0/100% 100% 0 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+.professional-features {
+  width: 100%;
+  height: 702px;
+  background: linear-gradient(#f7f0e6 60%, #fffcf6 80%);
+  padding-top: 6.375rem;
+}
+.features-container {
+  width: 1170px;
+  height: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  display: flex;
+  position: relative;
+}
+.features-container h2 {
+  margin-bottom: 32px;
+  font-size: 3rem;
+  font-weight: 300;
+  line-height: 3.5rem;
+  width: 540px;
+  height: 168px;
+  display: block;
+}
+.features-container span {
+  font-size: 20px;
+  font-weight: 300;
+  width: 540px;
+  height: 223px;
+  line-height: 32px;
+  display: block;
+  margin: 20px 0 48px 0;
+}
+.professional-collage {
+  grid-gap: 1.5rem;
+  grid-template-columns: 352px 205px;
+  position: absolute;
+  display: grid;
+  width: 581px;
+  display: grid;
+  height: 571px;
+  top: 0;
+  right: 0;
+}
+.left-column {
+  width: 352px;
+  height: 571px;
+  grid-gap: 1.5rem;
+  justify-items: end;
+  display: grid;
+  position: relative;
+}
+
+.left-photo-1 {
+  background-image: url("g.campos.jpg");
+  width: 267px;
+  height: 312px;
+  border-radius: 140px 15px 15px;
+  grid-column: 1 / span 2;
+  margin-top: 73px;
+  object-position: top;
+  object-fit: cover;
+  vertical-align: middle;
+  position: relative;
+  background-size: cover;
+}
+.left-photo-2 {
+  background-image: url("a.argianas.jpeg");
+  width: 157px;
+  height: 118px;
+  border-radius: 15px 15px 15px 70px;
+  grid-area: 2/1;
+  background-size: cover;
+  object-position: top;
+  object-fit: cover;
+  vertical-align: middle;
+  position: relative;
+}
+
+.left-photo-3 {
+  background-image: url("p.casthely.jpg");
+  width: 171px;
+  height: 162px;
+  border-radius: 15px 15px 70px;
+  grid-area: 2/2;
+  background-size: cover;
+  object-position: top;
+  object-fit: cover;
+  vertical-align: middle;
+  position: relative;
+}
+
+.devide-right {
+  width: 100%;
+  height: 223px;
+  background-color: #fffcf6;
+}
+.how-it-works::before {
+  content: "";
+  background-image: url("divider-right.png");
+  width: 100%;
+  height: 112px;
+  background-repeat: no-repeat;
+  position: absolute;
+  left: 0;
+  right: 0;
+  background-size: 100% 100%;
+  margin-top: -63px;
+}
+
+.how-it-works {
+  background-color: #f5f7f5;
+}
+
+.how-container {
+  width: 1170px;
+  height: 1640px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  position: relative;
+  top: 120px;
+}
+.how-container h2 {
+  color: #252625;
+  text-align: center;
+  width: 1140px;
+  height: 56px;
+  font-size: 3rem;
+  font-weight: 300;
+  margin: 32px 0 80px 0;
+}
+
+.how-it-works-card1 {
+  height: 356px;
+  width: 1140px;
+  display: grid;
+  grid-column-gap: 24px;
+  grid-template-columns: 690px auto;
+  align-items: center;
+}
+.card1-img {
+  background-image: url("image-how-it-works-1.png");
+  height: 356px;
+  width: 100%;
+  background-size: cover;
+}
+
+.card1-text-b {
+}
+.card1-text-b h2 {
+  width: 426px;
+  height: 80px;
+  font-weight: 300;
+  font-size: 2rem;
+  margin: 0;
+  text-align: left;
+}
+.card1-text-b p {
+  margin-top: 1.5rem;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 2rem;
 }

@@ -11,20 +11,22 @@ import (
 )
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
+
 	db := r.Context().Value("db").(*sql.DB)
-
 	var user models.User_credentials
-
 	err := json.NewDecoder(r.Body).Decode(&user)
+
 	if err != nil {
 		http.Error(w, "Invalid JSON data", http.StatusBadRequest)
 		return
 	}
 
 	phoneNumber := user.PhoneNumber
+
 	password := user.Password
 
 	tokenString, err := auth.Authenticate(db, phoneNumber, password)
+
 	if err != nil {
 		// Обработка ошибки аутентификации, например, отправка сообщения об ошибке пользователю
 		http.Error(w, "Authentication failed", http.StatusUnauthorized)
