@@ -106,7 +106,41 @@ const Home = (props: Props) => {
               </p>
             </div>
           </div>
+          <div className="down-arrow-class">
+            <div className="arrow-down-img"></div>
+          </div>
+
+          <div className="how-it-works-card2">
+            <div className="card2-img"></div>
+            <div className="card2-text-b">
+              <h2>Коммуницируйте как удобно</h2>
+              <p>
+                Поговорите со своим психологом так, как вам удобно: текстовое
+                сообщение, чат, телефон или видео.
+              </p>
+            </div>
+          </div>
+          <div className="down-arrow-class">
+            <div className="arrow-down-img"></div>
+          </div>
+          <div className="how-it-works-card3">
+            <div className="card3-img"></div>
+            <div className="card3-text-b">
+              <h2>В любой удобное время для Вас</h2>
+              <p>
+                Вы можете написать своему психологу в любое время и из любого
+                места. Вы также можете планировать сеансы в реальном времени,
+                когда вам удобно, и можете подключаться с любого мобильного
+                устройства или компьютера.
+              </p>
+            </div>
+          </div>
         </div>
+      </section>
+
+      <section className="reviews">
+        <div className="reviews1"></div>
+        <div className="reviews-container"></div>
       </section>
     </main>
   );

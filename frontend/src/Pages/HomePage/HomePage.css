@@ -370,7 +370,7 @@
 
 .how-container {
   width: 1170px;
-  height: 1640px;
+  height: 1873px;
   margin-left: auto;
   margin-right: auto;
   padding-left: 15px;
@@ -403,8 +403,6 @@
   background-size: cover;
 }
 
-.card1-text-b {
-}
 .card1-text-b h2 {
   width: 426px;
   height: 80px;
@@ -418,4 +416,94 @@
   font-size: 20px;
   font-weight: 300;
   line-height: 2rem;
+}
+
+.down-arrow-class {
+  padding: 4.75rem 0;
+  display: flex;
+  justify-content: center;
+}
+.arrow-down-img {
+  background-image: url("arrow-down-green.png");
+  width: 40px;
+  height: 55px;
+  background-size: cover;
+}
+
+.how-it-works-card2 {
+  height: 356px;
+  width: 1140px;
+  display: grid;
+  grid-column-gap: 24px;
+  grid-template-columns: 690px auto;
+  align-items: center;
+}
+.card2-img {
+  background-image: url("image-how-it-works-2.png");
+  height: 356px;
+  width: 100%;
+  background-size: cover;
+}
+
+.card2-text-b h2 {
+  width: 426px;
+  height: 80px;
+  font-weight: 300;
+  font-size: 2rem;
+  margin: 0;
+  text-align: left;
+}
+.card2-text-b p {
+  margin-top: 1.5rem;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 2rem;
+}
+
+.how-it-works-card3 {
+  height: 356px;
+  width: 1140px;
+  display: grid;
+  grid-column-gap: 24px;
+  grid-template-columns: 690px auto;
+  align-items: center;
+}
+.card3-img {
+  background-image: url("image-how-it-works-3.png");
+  height: 356px;
+  width: 100%;
+  background-size: cover;
+}
+
+.card3-text-b h2 {
+  width: 426px;
+  height: 80px;
+  font-weight: 300;
+  font-size: 2rem;
+  margin: 0;
+  text-align: left;
+}
+.card3-text-b p {
+  margin-top: 1.5rem;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 2rem;
+}
+
+.reviews::before {
+  background-image: url("divider-main-3.png");
+  content: "";
+  background-size: 100% 100%;
+  height: 112px;
+  width: 100%;
+  position: absolute;
+}
+
+.reviews-container {
+  background-image: url("yellow-curve.svg");
+  background-size: 100% 100%;
+  position: relative;
+  width: 100%;
+  height: 808px;
+  background-color: #325343;
 }

@@ -1,0 +1,42 @@
+@import url("https://fonts.googleapis.com/css2?family=Overpass:wght@300;400;500;600;700&display=swap");
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Overpass", sans-serif;
+}
+
+.login-container {
+  /* background-color: yellow; */
+  width: 100%;
+  height: 582px;
+  /* margin: 0 710px 0 710px; */
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  text-align: center;
+  padding: 64px 15px 0 15px;
+}
+
+.login-block h1 {
+  margin-bottom: 15px;
+  font-weight: 400;
+  font-size: 40px;
+}
+
+.login-block p {
+  margin-bottom: 24px;
+}
+
+.login-verify {
+  padding: 0px 15px;
+}
+
+.form-send {
+}
+.custom-phone-input {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  text-align: center;
+}

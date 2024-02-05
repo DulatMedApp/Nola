@@ -3,8 +3,7 @@ import React from "react";
 type Props = {};
 
 const Header = (props: Props) => {
-  return;
-  <h1>Salem Alsem</h1>;
+  return <header>dasd</header>;
 };
 
 export default Header;
