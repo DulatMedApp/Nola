@@ -36,10 +36,12 @@ func main() {
 	// Создаем маршрутизатор
 	r := routers.SetupRouter()
 
-	// Запускаем сервер на порту 8080
+	handler := corsHandler(r)
+
+	//Запускаем сервер на порту 8080
 	server := &http.Server{
 		Addr:    ":8080",
-		Handler: r,
+		Handler: handler,
 	}
 
 	log.Println("Server is running on port 8080")
@@ -48,4 +50,22 @@ func main() {
 		log.Fatal("Server failed to start: ", err)
 	}
 
+}
+
+// corsHandler добавляет middleware для CORS к маршрутизатору
+func corsHandler(h http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// Разрешаем доступ к API с указанных доменов
+		w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+
+		// Если запрос метода OPTIONS, завершаем обработку запроса
+		if r.Method == "OPTIONS" {
+			return
+		}
+
+		// Продолжаем обработку запроса
+		h.ServeHTTP(w, r)
+	})
 }

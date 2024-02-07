@@ -1,0 +1,69 @@
+@import url("https://fonts.googleapis.com/css2?family=Overpass:wght@300;400;500;600;700&display=swap");
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Overpass", sans-serif;
+}
+.header-content {
+  width: 100%;
+  height: 64px;
+  padding: 16px;
+  display: flex;
+
+  justify-content: space-between;
+  background-color: #325343;
+  color: white;
+  align-items: center;
+}
+.header-logo {
+  margin-right: 50px;
+  width: 180px;
+  height: 100%;
+  background-image: url("header-logo.png"); /* Добавляем фоновое изображение */
+  background-size: contain; /* Задаем размеры фонового изображения */
+  background-repeat: no-repeat;
+}
+
+/* .header-logo a {
+  background-image: url("header-logo.png");
+  background-size: contain;
+  width: 100%;
+  height: 100%;
+} */
+
+.header-menu {
+  right: 0;
+}
+.header-menu li {
+  display: inline;
+  font-size: 12px;
+  margin: 0 15px;
+}
+.header-menu li a {
+  text-decoration: none;
+  color: inherit;
+  font-weight: 400;
+}
+
+.header-buttons {
+  display: flex;
+  font-weight: 400;
+
+  font-size: 12px;
+  gap: 30px;
+}
+.login {
+  border: 1.5px solid white;
+  border-radius: 25px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+.psy-choose {
+  border: 1.5px solid white;
+  border-radius: 25px;
+  padding: 8px 16px;
+  background-color: white;
+  color: black;
+  font-weight: 500;
+}
