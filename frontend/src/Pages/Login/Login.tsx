@@ -4,6 +4,9 @@ import { useState } from "react";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 import { sendSmsCode } from "../../api/sendSMS/sendSMS";
+import Button from "@mui/material/Button";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import theme1 from "../../styles/theme";
 
 type Props = {};
 
@@ -24,6 +27,14 @@ const Login = () => {
       // Отобразить сообщение об ошибке
     }
   };
+
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#325343", // Hex-код для красного цвета
+      },
+    },
+  });
 
   return (
     <main>
@@ -46,8 +57,12 @@ const Login = () => {
                   className="custom-phone-input"
                 />
                 <div className="button-login">
-                  <button>Получить код</button>
+                  <ThemeProvider theme={theme1}>
+                    <Button variant="contained">Получить код</Button>
+                  </ThemeProvider>
+
                   <p>Вход для психологов</p>
+
                   <span>
                     Нажимая «Получить код» вы принимаете пользовательское
                     соглашение, даете согласие на обработку персональных данных.

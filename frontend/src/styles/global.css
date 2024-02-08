@@ -1,0 +1,3 @@
+.MuiTypography-root {
+  text-transform: none; /* отключает преобразование регистра */
+}

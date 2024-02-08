@@ -28,7 +28,7 @@
 .login-block h1 {
   margin-bottom: 15px;
   font-weight: 600;
-  font-size: 40px;
+  font-size: 36px;
 }
 
 .login-block p {
@@ -48,7 +48,7 @@
   text-align: center;
 }
 
-.button-login button {
+.button-login button1 {
   background-color: #325343;
   margin-top: 12px;
   padding: 12px 24px;
@@ -62,9 +62,16 @@
   color: #325343;
   font-weight: 600;
   margin-top: 40px;
+  cursor: pointer;
 }
 
 .button-login span {
   width: 100%;
   font-weight: 300;
+}
+.button-login button {
+  margin-top: 12px;
+  padding: 12px 24px;
+  width: 218px;
+  height: 45px;
 }
