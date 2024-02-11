@@ -58,7 +58,9 @@ const Login = () => {
                 />
                 <div className="button-login">
                   <ThemeProvider theme={theme1}>
-                    <Button variant="contained">Получить код</Button>
+                    <Button variant="contained" type="submit">
+                      Получить код
+                    </Button>
                   </ThemeProvider>
 
                   <p>Вход для психологов</p>

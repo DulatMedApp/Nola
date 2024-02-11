@@ -24,5 +24,6 @@ func InitDB() (*sql.DB, error) {
 	}
 
 	fmt.Println("Успешное подключение к базе данных!")
+
 	return db, nil
 }

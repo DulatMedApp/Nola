@@ -31,7 +31,8 @@ func SetupRouter() *mux.Router {
 	//Route for update psychologist
 	r.HandleFunc("/api/psychologist/update/{psychologist_id}", handlers.UpdatePsychologistHandler).Methods(http.MethodPut)
 
-	/*end of psychologist routers----------------------------*/
+	//Route to get workTopics
+	r.HandleFunc("/api/psy/worktopics", handlers.GetPsyWorkTopics).Methods(http.MethodGet)
 
 	/*clients routers-----------------------------------------*/
 
@@ -50,14 +51,10 @@ func SetupRouter() *mux.Router {
 	// Route for UPDATE client
 	r.HandleFunc("/api/client/update/{client_id}", handlers.UpdateClientHandler).Methods(http.MethodPut)
 
-	/*end of clients routers-----------------------------------*/
-
 	/*users routers-----------------------------------------*/
 
 	//Route to get all users
 	r.HandleFunc("/api/users/all", handlers.GetAllUsers).Methods(http.MethodGet)
-
-	/*end of users routers-----------------------------------*/
 
 	/*sms routers-----------------------------------------*/
 
@@ -67,13 +64,15 @@ func SetupRouter() *mux.Router {
 	//Route for send SMS if user exist
 	r.HandleFunc("/api/send-sms/user-exist", handlers.SendSmsUserExistHandler).Methods(http.MethodPost)
 
-	/*end of sms routers-----------------------------------*/
-
 	//Route for authentification and get token
 	r.HandleFunc("/api/login", handlers.LoginHandler).Methods(http.MethodPost)
+
+	/*catalogs routers---------------------------------------*/
+
+	//Get language catalog
+	r.HandleFunc("/api/catalog/languages", handlers.GetLanguages).Methods(http.MethodGet)
 
 	// //Route for update user password
 	// r.HandleFunc("/api/update/user", handlers.UpdateUserPassword).Methods(http.MethodPost)
 
-	return r
 }

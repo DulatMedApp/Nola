@@ -1,0 +1,154 @@
+@import url("https://fonts.googleapis.com/css2?family=Overpass:wght@300;400;500;600;700&display=swap");
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Overpass", sans-serif;
+}
+h1 {
+  font-weight: 300;
+  font-size: 48px;
+  line-height: 56px;
+  color: #f5f7f5;
+}
+h2 {
+  color: black;
+  text-align: center;
+  font-size: 2rem;
+  /* letter-spacing: -0.02em; */
+  color: #252625;
+  font-weight: 300;
+}
+
+.container-banner {
+  height: 850px;
+  background-image: linear-gradient(
+      rgba(50, 83, 67, 0.85),
+      rgba(50, 83, 67, 0.85)
+    ),
+    url(".././Psychologist/img/banner.jpg");
+  background-size: cover;
+}
+
+.container-header {
+  max-width: 800px;
+  align-items: center;
+  text-align: center;
+  padding: 70px 24px;
+}
+
+.dividing-green-left,
+.dividing-green,
+.dividing-green-right,
+.dividing-green-bottom,
+.dividing-green-last {
+  background-size: cover;
+  height: 72px;
+  top: -25px;
+  position: relative;
+  background-size: 100% 100%;
+}
+
+.dividing-green-left {
+  background-image: url(".././Psychologist/img/green-line-left.png");
+}
+.container-practice {
+  height: 640px;
+  background-color: #fffcf6;
+  top: -25px;
+  position: relative;
+}
+
+.practice-benefits {
+  margin-top: 40px;
+  max-width: 800px;
+  font-size: 20px;
+  font-weight: 300;
+}
+.benefits-list {
+  margin-top: 30px;
+  width: 500px;
+  align-items: center;
+  justify-content: center;
+}
+.benefits {
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  justify-content: center;
+}
+.image-1 {
+  background-image: url(".././Psychologist/img/icon_health.png");
+  width: 60px;
+  height: 60px;
+  background-size: cover;
+}
+
+.image-2 {
+  background-image: url(".././Psychologist/img/icon_bonuses.png");
+  width: 60px;
+  height: 60px;
+  background-size: cover;
+}
+.image-3 {
+  background-image: url(".././Psychologist/img/icon_free.png");
+  width: 60px;
+  height: 60px;
+  background-size: cover;
+}
+.image-4 {
+  background-image: url(".././Psychologist/img/icon_course.png");
+  width: 60px;
+  height: 60px;
+  background-size: cover;
+}
+.dividing-green {
+  background-image: url(".././Psychologist/img/divider-green.png");
+}
+.container-comparison {
+  height: 640px;
+  background-color: #325343;
+  top: -30px;
+  position: relative;
+}
+.container-comparison h2 {
+  color: #f5f7f5;
+}
+
+.dividing-green-right {
+  background-image: url(".././Psychologist/img/divider-right.png");
+  top: -50px;
+}
+.video-container {
+  height: 600px;
+  background-color: #f5f7f5;
+  position: relative;
+  top: -50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.video-container iframe {
+  margin-top: 70px;
+  width: 533px;
+  height: 299px;
+}
+.dividing-green-bottom {
+  background-image: url(".././Psychologist/img/divider-green.png");
+  top: -70px;
+}
+.feedback-container {
+  height: 500px;
+  background-color: #325343;
+  top: -75px;
+  position: relative;
+}
+.dividing-green-bottom {
+  background-image: url(".././Psychologist/img/divider-green.png");
+  top: -70px;
+}
+.dividing-green-last {
+  background-image: url(".././Psychologist/img/green-line-left.png");
+  top: -95px;
+}
