@@ -1,6 +1,7 @@
 .main-container {
-  width: 800px;
-  height: 5438px;
+  max-width: 800px;
+  align-items: center;
+  justify-content: center;
 }
 h1 {
   color: #252625;
@@ -8,6 +9,8 @@ h1 {
   font-weight: 600;
   margin-top: 25px;
   margin-bottom: 30px;
+  display: block;
+  padding: 0 24px;
 }
 text {
   font-weight: 300;
@@ -21,6 +24,9 @@ text {
 .fields {
   margin-top: 25px;
 }
+.fields text {
+  display: block;
+}
 .psychologist-reg text {
   font-size: 20x;
   font-weight: 400;
@@ -29,4 +35,14 @@ text {
   font-size: 10x;
   font-weight: 300;
   color: #6d6e6f;
+}
+
+#demo-simple-select {
+  width: 350px;
+}
+
+.work-topics .topics-form-control {
+  display: block;
+  align-items: center;
+  margin-bottom: -5px;
 }

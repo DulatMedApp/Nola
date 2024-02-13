@@ -5,6 +5,7 @@ import Login from "../Pages/Login/Login";
 import Profile from "../Pages/SignUp/Profile/Profile";
 import Psychologist from "../Pages/Psychologist/Psychologist";
 import Registration from "../Pages/Psychologist/Registration/Registration";
+import UiTest from "../Pages/TestPage/UiTest";
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
   {
     path: "/psychologist/registration",
     element: <Registration />,
+  },
+  {
+    path: "/testpage",
+    element: <UiTest />,
   },
 ]);
 

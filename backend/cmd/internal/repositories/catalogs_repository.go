@@ -51,3 +51,23 @@ func GetLanguages(db *sql.DB) ([]models.Languages, error) {
 
 	return languages, nil
 }
+
+func GetTherapyMethods(db *sql.DB) ([]models.TherapyMethods, error) {
+	rows, err := db.Query("SELECT   method_id,     method_name from therapy_methods")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var therapymethods []models.TherapyMethods
+
+	for rows.Next() {
+		var methods models.TherapyMethods
+
+		if err := rows.Scan(&methods.ID, &methods.Name); err != nil {
+			return nil, err
+		}
+		therapymethods = append(therapymethods, methods)
+	}
+	return therapymethods, nil
+}

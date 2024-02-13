@@ -29,3 +29,13 @@ func GetLanguages(w http.ResponseWriter, r *http.Request) {
 	}
 	helpers.RespondJSON(w, languages, http.StatusOK)
 }
+
+func GetTherapyMethods(w http.ResponseWriter, r *http.Request) {
+	db := r.Context().Value("db").(*sql.DB)
+	therapymethods, err := repositories.GetTherapyMethods(db)
+	if err != nil {
+		helpers.RespondJSON(w, "Unable to fetch Therapy Methos", http.StatusInternalServerError)
+		return
+	}
+	helpers.RespondJSON(w, therapymethods, http.StatusOK)
+}

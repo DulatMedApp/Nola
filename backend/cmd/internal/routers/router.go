@@ -72,7 +72,11 @@ func SetupRouter() *mux.Router {
 	//Get language catalog
 	r.HandleFunc("/api/catalog/languages", handlers.GetLanguages).Methods(http.MethodGet)
 
-	// //Route for update user password
+	//Get TherapyMethods
+	r.HandleFunc("/api/catalog/therapy-methods", handlers.GetTherapyMethods).Methods(http.MethodGet)
+
+	//Route for update user password
 	// r.HandleFunc("/api/update/user", handlers.UpdateUserPassword).Methods(http.MethodPost)
 
+	return r
 }
