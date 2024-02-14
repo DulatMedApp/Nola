@@ -4,11 +4,11 @@ import theme from "../../../src/styles/theme";
 import { ThemeProvider } from "@mui/material/styles";
 import RemoveCircle from "@mui/icons-material/RemoveCircle";
 
-interface UploadImagesProps {
+interface AttachmentUpload {
   maxFiles?: number;
 }
 
-const UploadImages: React.FC<UploadImagesProps> = ({ maxFiles = 5 }) => {
+const AttachmentUpload: React.FC<AttachmentUpload> = ({ maxFiles = 5 }) => {
   const [files, setFiles] = useState<FileList | null>(null);
   const [fileUrls, setFileUrls] = useState<string[]>([]);
 
@@ -114,4 +114,4 @@ const UploadImages: React.FC<UploadImagesProps> = ({ maxFiles = 5 }) => {
   );
 };
 
-export default UploadImages;
+export default AttachmentUpload;

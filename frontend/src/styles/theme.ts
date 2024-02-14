@@ -16,7 +16,15 @@ const theme = createTheme({
       lineHeight: 1.5,
       margin: "10px 0",
       fontWeight: 300,
-      fontSize: "2.5rem",
+      fontSize: "12.5rem",
+    },
+    h1: {
+      // Настройте здесь желаемые параметры
+      color: "#333",
+      lineHeight: 1.5,
+      margin: "10px 0",
+      fontWeight: 300,
+      fontSize: "35.5rem",
     },
   },
   components: {

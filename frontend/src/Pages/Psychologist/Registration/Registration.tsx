@@ -16,14 +16,11 @@ import {
   Link,
 } from "@mui/material";
 
-import {
-  getPsyWorkTopics,
-  PsyWorkTopics,
-} from "../../../api/getCatalogs/getPsyWorkTopics";
+import { PsyWorkTopics } from "../../../api/getCatalogs/getPsyWorkTopics";
 
 import { TextField, Checkbox } from "@mui/material";
 import theme from "../../../styles/theme";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 import { Paper } from "@mui/material";
 import RadioButton from "../../../Components/RegistrationForm/RadioButton";
 import LanguageChoose from "../../../Components/RegistrationForm/LanguageChoose";
@@ -33,10 +30,8 @@ import ExpandTextField from "../../../Components/RegistrationForm/ExpandTextFiel
 import PsyTopicsWork from "../../../Components/RegistrationForm/PsyTopicsWork";
 import DatePicker from "../../../Components/RegistrationForm/DatePicker";
 
-import { LocalizationProvider, DatePicker as MUIDatePicker } from "@mui/lab";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import ruLocale from "date-fns/locale/ru";
 import UploadImages from "../../../Components/RegistrationForm/UploadImages";
+import AttachmentUpload from "../../../Components/RegistrationForm/AttachmentUpload";
 
 type Props = {};
 
@@ -90,6 +85,8 @@ const Registration: React.FC<Props> = () => {
               flexDirection: "column",
               alignItems: "center",
             }}>
+            <h2>Давайте работать вместе</h2>
+            <br />
             <Box component="form" noValidate>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
@@ -170,6 +167,7 @@ const Registration: React.FC<Props> = () => {
                 </Grid>
 
                 <Grid item xs={12}>
+                  <h5>Загрузите пожалуйста Вашу фотографию: </h5>
                   {/* <input
                     accept="image/*"
                     //className={classes.input}
@@ -191,7 +189,7 @@ const Registration: React.FC<Props> = () => {
                 <Grid item xs={12}>
                   <ExpandTextField
                     name="aboutPsy"
-                    label="Напишите о Вашем образовнии"
+                    label="Напишите о Вашем образовании"
                   />
                 </Grid>
 
@@ -203,12 +201,25 @@ const Registration: React.FC<Props> = () => {
                 </Grid>
 
                 <Grid item xs={12}>
+                  <h5>Загрузите пожалуйста скан дипломов (если есть): </h5>
+
+                  <AttachmentUpload />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <ExpandTextField
+                    name="psySocialLinks"
+                    label="Напишите ссылки на Ваши социальные сети"
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
                   <Button
                     type="submit"
                     fullWidth
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}>
-                    Sign Up
+                    Зарегистрироваться
                   </Button>
                 </Grid>
                 <Grid item xs={12}>
@@ -216,14 +227,17 @@ const Registration: React.FC<Props> = () => {
                     control={
                       <Checkbox value="allowExtraEmails" color="primary" />
                     }
-                    label="I want to receive inspiration, marketing promotions and updates via email."
+                    label="Нажимая «Зарегистрироваться» вы принимаете пользовательское
+                     соглашение, даете согласие на обработку персональных данных. 
+                     Подробнее в Политике."
+                    sx={{ fontSize: "10.5rem" }}
                   />
                 </Grid>
               </Grid>
               <Grid container justifyContent="flex-end">
                 <Grid item>
                   <Link href="#" variant="body2">
-                    Already have an account? Sign in
+                    Уже есть аккаунт? Вход в систему
                   </Link>
                 </Grid>
               </Grid>
