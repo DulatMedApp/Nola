@@ -1,131 +1,50 @@
-import React, {
-  useState,
-  useEffect,
-  Dispatch,
-  SetStateAction,
-  ChangeEvent,
-} from "react";
+/* import Components */
+import RowTextField from "../../../Components/RegistrationForm/RowTextField";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import { Input as BaseInput, InputProps } from "@mui/base/Input";
-
-// Импортируйте флаги стран
-import flags from "react-phone-number-input/flags.png";
 
 import Container from "@mui/material/Container";
 //import "./Registration.css";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import ruLocale from "dayjs/locale/ru";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+
 import {
   Button,
   CssBaseline,
   FormControlLabel,
-  FormLabel,
   Grid,
   Link,
-  makeStyles,
-  MenuItem,
-  Radio,
-  RadioGroup,
-  Select,
 } from "@mui/material";
 
 import {
   getPsyWorkTopics,
   PsyWorkTopics,
 } from "../../../api/getCatalogs/getPsyWorkTopics";
-import { getLanguages, Languages } from "../../../api/getCatalogs/getLanguages";
-import {
-  getTherapyMethods,
-  TherapyMethods,
-} from "../../../api/getCatalogs/getTherapyMethods";
 
-import {
-  FormControl,
-  FormHelperText,
-  Input,
-  InputLabel,
-  TextField,
-  Checkbox,
-} from "@mui/material";
+import { TextField, Checkbox } from "@mui/material";
 import theme from "../../../styles/theme";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Paper } from "@mui/material";
+import RadioButton from "../../../Components/RegistrationForm/RadioButton";
+import LanguageChoose from "../../../Components/RegistrationForm/LanguageChoose";
+import { Languages } from "../../../api/getCatalogs/getLanguages";
+import PsyMethodWork from "../../../Components/RegistrationForm/PsyMethodWork";
+import ExpandTextField from "../../../Components/RegistrationForm/ExpandTextField";
+import PsyTopicsWork from "../../../Components/RegistrationForm/PsyTopicsWork";
+import DatePicker from "../../../Components/RegistrationForm/DatePicker";
+
+import { LocalizationProvider, DatePicker as MUIDatePicker } from "@mui/lab";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import ruLocale from "date-fns/locale/ru";
+import UploadImages from "../../../Components/RegistrationForm/UploadImages";
 
 type Props = {};
 
 const Registration: React.FC<Props> = () => {
-  const [topics, setTopics] = useState<PsyWorkTopics[]>([]);
-  const [languages, setLanguages] = useState<Languages[]>([]);
-  const [therapy, setTherapy] = useState<TherapyMethods[]>([]);
-
-  //Hook to get Therapy Methods from API
-
-  useEffect(() => {
-    const fetchTherapy = async () => {
-      try {
-        const therapyData = await getTherapyMethods();
-        setTherapy(therapyData);
-      } catch (error) {
-        console.error("Failed to fetch Therapy", error);
-      }
-    };
-    fetchTherapy();
-  }, []);
-
-  //Hook to get Languages from Api
-  useEffect(() => {
-    const fetchLanguages = async () => {
-      try {
-        const languagesData = await getLanguages();
-        setLanguages(languagesData);
-      } catch (error) {
-        console.error("Failed to fetch languages", error);
-      }
-    };
-    fetchLanguages();
-  }, []);
-
-  useEffect(() => {
-    // Получение данных из API при загрузке компонента
-    const fetchTopics = async () => {
-      try {
-        const topicsData = await getPsyWorkTopics();
-        setTopics(topicsData);
-      } catch (error) {
-        console.error("Failed to fetch work topics:", error);
-      }
-    };
-
-    fetchTopics();
-  }, []);
-
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
-  };
-  useEffect(() => {
-    if (therapy.length > 0) {
-      setContactValue(therapy[0].id.toString());
-    }
-  }, [therapy]);
-
-  const [ContactValue, setContactValue] = useState("");
-
-  const handleChange = (event: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setContactValue(event.target.value);
-  };
-  const [value, setValue] = React.useState("female");
-
-  const handleChangeGender = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue((event.target as HTMLInputElement).value);
   };
 
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -151,6 +70,13 @@ const Registration: React.FC<Props> = () => {
     console.log(selectedFile);
   };
 
+  /* Gender choose Radio Button */
+  const [value, setValue] = React.useState("female");
+
+  const handleChangeGender = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue((event.target as HTMLInputElement).value);
+  };
+
   return (
     <main>
       <ThemeProvider theme={theme}>
@@ -167,44 +93,17 @@ const Registration: React.FC<Props> = () => {
             <Box component="form" noValidate>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
-                  <TextField
-                    autoComplete="given-name"
-                    name="firstName"
-                    required
-                    fullWidth
-                    id="firstName"
-                    label="Имя"
-                    autoFocus
-                  />
+                  <RowTextField name="firstName" label="Имя" />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="lastName"
-                    label="Фамилия"
-                    name="lastName"
-                    autoComplete="family-name"
-                  />
+                  <RowTextField name="secondName" label="Фамилия" />
                 </Grid>
                 <Grid item xs={12}>
-                  <RadioGroup
-                    aria-labelledby="demo-controlled-radio-buttons-group"
-                    name="controlled-radio-buttons-group"
+                  <RadioButton
+                    name="Gender"
                     value={value}
                     onChange={handleChangeGender}
-                    row>
-                    <FormControlLabel
-                      value="female"
-                      control={<Radio />}
-                      label="Женский"
-                    />
-                    <FormControlLabel
-                      value="male"
-                      control={<Radio />}
-                      label="Мужской"
-                    />
-                  </RadioGroup>
+                  />
                 </Grid>
                 <Grid item xs={12}>
                   <PhoneInput
@@ -215,126 +114,63 @@ const Registration: React.FC<Props> = () => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="dob"
-                    label="Дата рождения"
-                    name="email"
-                    autoComplete="email"
-                  />
+                  <DatePicker />
                 </Grid>
 
                 <Grid item xs={12}>
-                  <h5>На каких языках Вы ведете сессию? </h5>
-                  {languages.map((language, index) => (
-                    <Grid item xs={12} key={index}>
-                      <FormControlLabel
-                        control={<Checkbox className="topics-checkbox" />}
-                        label={language.name}
-                      />
-                    </Grid>
-                  ))}
+                  <RowTextField name="email" label="email" />
                 </Grid>
 
                 <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="email"
-                    label="email"
-                    name="email"
-                    autoComplete="email"
-                  />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="recommendation"
-                    label="Откуда Вы о нас узнали?"
+                  <RowTextField
                     name="recommendation"
-                    autoComplete=""
+                    label="Откуда Вы о нас узнали"
                   />
                 </Grid>
 
                 <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="experience"
-                    label="Сколько лет у Вас опыта?"
+                  <RowTextField
                     name="experience"
-                    autoComplete=""
+                    label="Сколько лет у Вас опыта?"
                   />
                 </Grid>
 
                 <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="community"
-                    label="Состоите ли Вы в каком-нибудь обществе?"
+                  <RowTextField
                     name="community"
-                    autoComplete=""
+                    label="Состоите ли Вы в каком-нибудь обществе?"
                   />
                 </Grid>
 
                 <Grid item xs={12}>
                   <h5>Ваш основной метод: </h5>
 
-                  <Select
-                    labelId="Contact Select"
-                    id="demo-simple-select"
-                    value={ContactValue}
-                    label="Select Contact"
-                    onChange={handleChange}>
-                    {therapy.map((data) => {
-                      return (
-                        <MenuItem key={data.id} value={data.id}>
-                          {data.name}
-                        </MenuItem>
-                      );
-                    })}
-                  </Select>
+                  <PsyMethodWork
+                    onMethodWorksChange={[value] as unknown as Languages[]}
+                  />
                 </Grid>
 
                 <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="community"
+                  <ExpandTextField
+                    name="aboutPsy"
                     label="Расскажите о себе, для клиентов"
-                    name="community"
-                    autoComplete=""
-                    multiline
-                    rows={4} // Установите желаемое количество строк
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <TextField
-                    autoComplete=""
-                    name="sessionDuration"
-                    required
-                    fullWidth
-                    id="sessionDuration"
-                    label="Длительность сессии (минуты)"
+                  <RowTextField
+                    name="durationSession"
+                    label="Длительность сессии(минуты)"
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="constSession"
-                    label="Стоимость сессии (тенге)"
-                    name="lastName"
-                    autoComplete="family-name"
+                  <RowTextField
+                    name="costSession"
+                    label="Стоимость сессии(тенге)"
                   />
                 </Grid>
 
                 <Grid item xs={12}>
-                  <input
+                  {/* <input
                     accept="image/*"
                     //className={classes.input}
                     id="contained-button-file"
@@ -348,32 +184,22 @@ const Registration: React.FC<Props> = () => {
                       component="span">
                       Upload
                     </Button>
-                  </label>
+                  </label> */}
+                  <UploadImages />
                 </Grid>
 
                 <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="education"
-                    label="Напишите о Вашем образовании"
-                    name="education"
-                    autoComplete=""
-                    multiline
-                    rows={4} // Установите желаемое количество строк
+                  <ExpandTextField
+                    name="aboutPsy"
+                    label="Напишите о Вашем образовнии"
                   />
                 </Grid>
 
                 <Grid item xs={12}>
                   <h5>Выберите темы с которыми вы работаете: </h5>
-                  {topics.map((topics, index) => (
-                    <Grid item xs={12} key={index}>
-                      <FormControlLabel
-                        control={<Checkbox className="topics-checkbox" />}
-                        label={topics.name}
-                      />
-                    </Grid>
-                  ))}
+                  <PsyTopicsWork
+                    onTopicsChange={[value] as unknown as PsyWorkTopics[]}
+                  />
                 </Grid>
 
                 <Grid item xs={12}>
