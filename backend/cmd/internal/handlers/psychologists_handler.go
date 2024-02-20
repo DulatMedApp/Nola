@@ -89,7 +89,7 @@ func CreateNewPshychologistHandler(w http.ResponseWriter, r *http.Request) {
 	err = repositories.CreateNewPsychologist(db, psych)
 
 	if err != nil {
-		helpers.RespondJSON(w, "Failed to create psychologist", http.StatusInternalServerError)
+		helpers.RespondJSON(w, "Failed to create psychologist "+err.Error(), http.StatusInternalServerError)
 		return
 	}
 

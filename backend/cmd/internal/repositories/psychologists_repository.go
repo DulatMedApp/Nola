@@ -147,13 +147,19 @@ func CreateNewPsychologist(db *sql.DB, psych models.Psychologist) error {
 		return err
 	}
 
+	convertedDate, err := helpers.ConvertDateFormat(psych.DateOfBirth)
+	if err != nil {
+		fmt.Println("Error converting date:", err)
+		// Обработайте ошибку
+	}
+
 	insertQuery := `
-	INSERT INTO psychologists (user_credentials_id, name, surname, date_of_birth, gender, city, about_psychologist, experience_years, raiting, initial_reg_complete, created_at, updated_at)
-	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+	INSERT INTO psychologists (user_credentials_id, name, surname, date_of_birth, gender, city, about_psychologist, experience_years, get_new_order, consultation_cost, consultation_duration, community_member, rating, initial_reg_complete, created_at, updated_at)
+	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?)
 `
 
 	// Insert new user data into the database
-	_, err = tx.Exec(insertQuery, userCredentialsID, psych.Name, psych.Surname, psych.DateOfBirth, psych.Gender, psych.City, psych.AboutPsychologist, psych.ExperienceYears, psych.InitialRegComplete, 0.0, time.Now(), time.Now())
+	_, err = tx.Exec(insertQuery, userCredentialsID, psych.Name, psych.Surname, convertedDate, psych.Gender, psych.City, psych.AboutPsychologist, psych.ExperienceYears, psych.GetNewOrder, psych.ConsultationCost, psych.ConsultationDuration, psych.CommunityMember, psych.InitialRegComplete, 0.0, time.Now(), time.Now())
 	if err != nil {
 		fmt.Println("Error inserting into psychologist table:", err)
 		tx.Rollback()

@@ -46,7 +46,7 @@
   height: 440px;
 }
 
-.container-cards h1 {
+/* .container-cards h1 {
   text-align: center;
   margin: 0 auto;
   color: #f5f7f5;
@@ -56,7 +56,7 @@
   font-style: normal;
   font-weight: 300;
   line-height: 3.5rem;
-}
+} */
 
 .container-card-list {
   width: 1140px;

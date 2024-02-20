@@ -10,21 +10,46 @@ const theme = createTheme({
   typography: {
     fontFamily: ["Overpass", "sans-serif"].join(","),
     fontSize: 14,
-    h5: {
-      // Настройте здесь желаемые параметры
-      color: "#333",
-      lineHeight: 1.5,
-      margin: "10px 0",
-      fontWeight: 300,
-      fontSize: "12.5rem",
-    },
+
     h1: {
       // Настройте здесь желаемые параметры
       color: "#333",
       lineHeight: 1.5,
       margin: "10px 0",
       fontWeight: 300,
-      fontSize: "35.5rem",
+      fontSize: "10px",
+    },
+    h2: {
+      // Настройте здесь желаемые параметры
+      color: "#333",
+      lineHeight: 1.5,
+      margin: "10px 0",
+      fontWeight: 400,
+      fontSize: "32px",
+    },
+    h3: {
+      // Настройте здесь желаемые параметры
+      color: "#333",
+      lineHeight: 1.5,
+      margin: "10px 0",
+      fontWeight: 400,
+      fontSize: "25px",
+    },
+    h4: {
+      // Настройте здесь желаемые параметры
+      color: "#333",
+      lineHeight: 1.5,
+      margin: "10px 0",
+      fontWeight: 400,
+      fontSize: "25px",
+    },
+    h5: {
+      // Настройте здесь желаемые параметры
+      color: "#333",
+      lineHeight: 1.5,
+      margin: "10px 0",
+      fontWeight: 300,
+      fontSize: "16px",
     },
   },
   components: {
@@ -32,7 +57,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           textTransform: "none",
-          fontWeight: 400,
+          fontWeight: 700,
         },
       },
     },

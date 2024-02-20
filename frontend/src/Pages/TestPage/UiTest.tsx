@@ -1,140 +1,103 @@
-import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-//import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Paper } from "@mui/material";
+import { useForm, SubmitHandler } from "react-hook-form";
+// import { TestingApi } from "../../api/TestingApi";
+import { useState } from "react";
+import { CreatePsychologist } from "../../api/psychologists/CreatePsychologist";
 
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}>
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+// type Inputs = {
+//   name: string;
+//   surname: string;
+//   img_url: string;
+// };
 
-// TODO remove, this demo shouldn't need to reset the theme.
-const defaultTheme = createTheme();
+type Inputs = {
+  name: string;
+  surname: string;
+  email: string;
+  date_of_birth: string;
+  gender: string;
+  phone_number: string;
+  password: string;
+  city: string;
+  therapy_method: string;
+  about_psychologist: string;
+  experience_years: number;
+  consultation_cost: number;
+  consultation_duration: number;
+  community_member: string;
+};
 
 export default function UiTest() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>();
+
+  const onSubmit = async (formData: Inputs) => {
+    console.log(formData);
+    try {
+      await CreatePsychologist(formData); // Update this line to pass the formData object
+      alert("Психолог успешно создан");
+    } catch (error) {
+      alert("Ошибка при создании психолога: " + (error as Error).message);
+    }
   };
+  const [responseMessage, setResponseMessage] = useState<string>("");
+
+  // const handleTestingApi = async () => {
+  //   try {
+  //     const response = await TestingApi({
+  //       name: "",
+  //       surname: "",
+  //       img_url: "",
+  //     });
+  //     setResponseMessage(response.data);
+  //   } catch (error) {
+  //     setResponseMessage(
+  //       "Ошибка при создании психолога: " + (error as Error).message
+  //     );
+  //   }
+  // };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Paper
-          sx={{
-            marginTop: 8,
-            padding: 4,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}>
-          {/* <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <LockOutlinedIcon />
-        </Avatar> */}
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}>
-                  Sign Up
-                </Button>
-              </Grid>
-            </Grid>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="#" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
-        </Paper>
-        <Copyright sx={{ mt: 5 }} />
-      </Container>
-    </ThemeProvider>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <text>Name:</text>
+      <input defaultValue="" {...register("name")} />
+      <text>Surname:</text>
+      <input {...register("surname", { required: true })} />
+      <text>email:</text>
+      <input {...register("email", { required: true })} />
+      <text>DOB:</text>
+      <input {...register("date_of_birth", { required: true })} />
+      <text>Gender:</text>
+      <input {...register("gender", { required: true })} />
+      <text>Phone:</text>
+      <input {...register("phone_number", { required: true })} />
+      <text>Password:</text>
+      <input {...register("password", { required: true })} />
+      <text>City:</text>
+      <input {...register("city", { required: true })} />
+      <text>About:</text>
+      <input {...register("about_psychologist", { required: true })} />
+      <text>Experience:</text>
+      <input
+        type="number"
+        {...register("experience_years", { required: true })}
+      />
+      <text>Cost:</text>
+      <input
+        type="number"
+        {...register("consultation_cost", { required: true })}
+      />
+      <text>Duration:</text>
+      <input
+        type="number"
+        {...register("consultation_duration", { required: true })}
+      />
+      <text>Member:</text>
+      <input {...register("community_member", { required: true })} />
+
+      <input type="submit" />
+    </form>
   );
 }

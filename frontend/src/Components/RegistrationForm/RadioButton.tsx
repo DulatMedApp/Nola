@@ -1,28 +1,59 @@
 import { RadioGroup, FormControlLabel, Radio } from "@mui/material";
-import { on } from "events";
 import React from "react";
+import { ForwardedRef, forwardRef } from "react";
+import { UseFormRegisterReturn } from "react-hook-form";
 
-function RadioButton({
-  name,
-  value,
-  onChange,
-  ...props
-}: {
+interface RadioButtonProps {
   name: string;
-  value: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-}) {
-  return (
-    <RadioGroup
-      aria-labelledby="demo-controlled-radio-buttons-group"
-      name={name}
-      value={value}
-      onChange={onChange}
-      row>
-      <FormControlLabel value="female" control={<Radio />} label="Женский" />
-      <FormControlLabel value="male" control={<Radio />} label="Мужской" />
-    </RadioGroup>
-  );
+  register: UseFormRegisterReturn;
 }
+
+const RadioButton = forwardRef(
+  (
+    { name, register }: RadioButtonProps,
+    ref: ForwardedRef<HTMLInputElement>
+  ) => {
+    return (
+      <RadioGroup
+        aria-labelledby="demo-controlled-radio-buttons-group"
+        name={name}
+        row
+        ref={ref}>
+        <FormControlLabel
+          value="female"
+          control={<Radio />}
+          label="Женский"
+          {...register}
+        />
+        <FormControlLabel
+          value="male"
+          control={<Radio />}
+          label="Мужской"
+          {...register}
+        />
+      </RadioGroup>
+    );
+  }
+);
+
+// function RadioButton({
+//   value,
+//   onChange,
+//   ...props
+// }: {
+//   value: string;
+//   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+// }) {
+//   return (
+//     <RadioGroup
+//       aria-labelledby="demo-controlled-radio-buttons-group"
+//       value={value}
+//       onChange={onChange}
+//       row>
+//       <FormControlLabel value="female" control={<Radio />} label="Женский" />
+//       <FormControlLabel value="male" control={<Radio />} label="Мужской" />
+//     </RadioGroup>
+//   );
+// }
 
 export default RadioButton;

@@ -1,6 +1,6 @@
 import React from "react";
 import Container from "@mui/material/Container";
-import "./Psychologist.css";
+// import "./Psychologist.css";
 import Box from "@mui/material/Box";
 
 type Props = {};
@@ -8,7 +8,7 @@ type Props = {};
 const Psychologist = (props: Props) => {
   return (
     <main>
-      <Box>
+      {/* <Box>
         <Container maxWidth={false} className="container-banner">
           <Container maxWidth={false} className="container-header">
             <h1>Психологи — сердце и душа сервиса психотерапии Alter</h1>
@@ -56,7 +56,7 @@ const Psychologist = (props: Props) => {
         <div className="dividing-green-bottom"></div>
         <Container maxWidth={false} className="feedback-container"></Container>
         <div className="dividing-green-last"></div>
-      </Box>
+      </Box> */}
     </main>
   );
 };

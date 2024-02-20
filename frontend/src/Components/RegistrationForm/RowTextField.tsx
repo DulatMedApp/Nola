@@ -1,25 +1,29 @@
-import React from "react";
+import { ForwardedRef, forwardRef } from "react";
 import { TextField } from "@mui/material";
+import { UseFormRegisterReturn } from "react-hook-form";
 
-function RowTextField({
-  name,
-  label,
-  ...props
-}: {
-  name: string;
+interface RowTextFieldProps {
   label: string;
-}) {
-  return (
-    <TextField
-      autoComplete="given-name"
-      name={name}
-      required
-      fullWidth
-      //id="firstName"
-      label={label}
-      //autoFocus
-    />
-  );
+  register: UseFormRegisterReturn;
 }
+
+const RowTextField = forwardRef(
+  (
+    { label, register }: RowTextFieldProps,
+    ref: ForwardedRef<HTMLInputElement>
+  ) => {
+    return (
+      <TextField
+        autoComplete="given-name"
+        //required
+        fullWidth
+        inputRef={ref}
+        {...register} // Регистрируем поле в react-hook-form
+        label={label}
+        size="small"
+      />
+    );
+  }
+);
 
 export default RowTextField;

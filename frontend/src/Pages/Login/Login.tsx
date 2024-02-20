@@ -1,17 +1,32 @@
 import React from "react";
-import "./Login.css";
+//import "./Login.css";
 import { useState } from "react";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 import { sendSmsCode } from "../../api/sendSMS/sendSMS";
 import Button from "@mui/material/Button";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import theme1 from "../../styles/theme";
-
-type Props = {};
+import theme from "../../styles/theme";
+import Container from "@mui/material/Container";
+import {
+  CssBaseline,
+  Grid,
+  OutlinedInput,
+  Paper,
+  Typography,
+} from "@mui/material";
+import Box from "@mui/material/Box";
+import RowTextField from "../../Components/RegistrationForm/RowTextField";
+import { useForm } from "react-hook-form";
+import PasswordFieldComponent from "../../Components/RegistrationForm/PasswordFieldComponent";
 
 const Login = () => {
-  // const [phone, setPhone] = useState("");
+  type Inputs = {
+    phone_number: string;
+  };
+
+  const { register } = useForm<Inputs>();
+
   const [phoneNumber, setPhoneNumber] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
 
@@ -28,17 +43,45 @@ const Login = () => {
     }
   };
 
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: "#325343", // Hex-код для красного цвета
-      },
-    },
-  });
-
   return (
     <main>
-      <section className="login-container-main">
+      <ThemeProvider theme={theme}>
+        <Container
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            textAlign: "center",
+            minHeight: "50vh",
+          }}>
+          <CssBaseline />
+          <Box>
+            <Typography variant="h3"> Вход в личный кабинет</Typography>
+            <form onSubmit={handleSubmit}>
+              <Grid
+                container
+                spacing={2}
+                sx={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  textAlign: "center",
+                }}>
+                <Grid item xs={8}>
+                  <RowTextField
+                    label="Телефон"
+                    register={register("phone_number")}
+                  />
+                </Grid>
+                <Grid item xs={8}>
+                  <PasswordFieldComponent label={"Пароль"} />
+                </Grid>
+              </Grid>
+            </form>
+          </Box>
+        </Container>
+      </ThemeProvider>
+      {/* <section className="login-container-main">
         <div className="login-container">
           <div className="login-verify">
             <div className="login-block">
@@ -75,7 +118,7 @@ const Login = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
     </main>
   );
 };

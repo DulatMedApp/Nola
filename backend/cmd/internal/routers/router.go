@@ -75,6 +75,9 @@ func SetupRouter() *mux.Router {
 	//Get TherapyMethods
 	r.HandleFunc("/api/catalog/therapy-methods", handlers.GetTherapyMethods).Methods(http.MethodGet)
 
+	/*testing API---------------------------------------*/
+	r.HandleFunc(("/api/test"), handlers.CreateNewTestingHandler).Methods(http.MethodPost)
+
 	//Route for update user password
 	// r.HandleFunc("/api/update/user", handlers.UpdateUserPassword).Methods(http.MethodPost)
 
