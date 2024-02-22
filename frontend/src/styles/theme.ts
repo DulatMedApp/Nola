@@ -1,10 +1,9 @@
-import { withEmotionCache } from "@emotion/react";
 import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#325343", // Hex-код для красного цвета
+      main: "#325343",
     },
   },
   typography: {
@@ -16,31 +15,40 @@ const theme = createTheme({
       color: "#333",
       lineHeight: 1.5,
       margin: "10px 0",
-      fontWeight: 300,
-      fontSize: "10px",
+      fontWeight: 700,
+      fontSize: "3rem",
+      "@media (max-width:600px)": {
+        fontSize: "2.3rem",
+      },
     },
     h2: {
       // Настройте здесь желаемые параметры
       color: "#333",
       lineHeight: 1.5,
       margin: "10px 0",
-      fontWeight: 400,
-      fontSize: "32px",
+      fontWeight: 500,
+      fontSize: "2.5rem",
+      "@media (max-width:600px)": {
+        fontSize: "1.8rem",
+      },
     },
     h3: {
       // Настройте здесь желаемые параметры
-      color: "#333",
+      color: "#000",
       lineHeight: 1.5,
       margin: "10px 0",
-      fontWeight: 400,
-      fontSize: "25px",
+      fontWeight: 300,
+      fontSize: "2rem",
+      "@media (max-width:600px)": {
+        fontSize: "1.3rem",
+      },
     },
     h4: {
       // Настройте здесь желаемые параметры
       color: "#333",
       lineHeight: 1.5,
       margin: "10px 0",
-      fontWeight: 400,
+      fontWeight: 300,
       fontSize: "25px",
     },
     h5: {
@@ -49,7 +57,15 @@ const theme = createTheme({
       lineHeight: 1.5,
       margin: "10px 0",
       fontWeight: 300,
-      fontSize: "16px",
+      fontSize: "13px",
+    },
+    h6: {
+      // Настройте здесь желаемые параметры
+      color: "#333",
+      lineHeight: 1.5,
+      margin: "10px 0",
+      fontWeight: 400,
+      fontSize: "10px",
     },
   },
   components: {
@@ -57,7 +73,10 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           textTransform: "none",
-          fontWeight: 700,
+          fontWeight: 500,
+          fontSize: "15px",
+          color: "#fff",
+          backgroundColor: "#325343", // как вариант #397a4a
         },
       },
     },

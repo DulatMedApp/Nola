@@ -1,9 +1,27 @@
-@import url("https://fonts.googleapis.com/css2?family=Overpass:wght@300;400;500;600;700&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Overpass:wght@300;400;500;600;700&display=swap");
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   font-family: "Overpass", sans-serif;
+
+
+
+ // sx={{
+          //   backgroundColor: "#325343",
+          //   height: "650px",
+          //   justifyContent: "center",
+          //   alignItems: "center",
+          //   display: "flex",
+          // }}>
+
+
+} */
+
+.h1-test {
+  font-size: "200px";
+  height: "200px";
+  background-color: "red";
 }
 
 .home-wrapper-green-main {
@@ -22,7 +40,7 @@
   /* padding: 406.5px 686.5px 406.5px 594.5px; */
 }
 .home-wrapper-green::after {
-  background-image: url("home-wrapper-bottom.png");
+  background-image: url("../HomePage/img/home-wrapper-bottom.png");
   content: "";
   height: 72px;
   background-size: 100% 100%;
@@ -88,7 +106,7 @@
   border-radius: 10px;
   width: 346px;
   height: 288px;
-  background-image: url("home-girl.png");
+  /* background-image: url("../HomePage/img/home-girl.png"); */
   padding: 29px;
 }
 
@@ -112,7 +130,7 @@
   border-radius: 10px;
   width: 346px;
   height: 288px;
-  background-image: url("couples-before.png");
+  background-image: url("../HomePage/img/couples-before.png");
   padding: 29px;
   margin-left: 25px;
 }
@@ -137,7 +155,7 @@
   border-radius: 10px;
   width: 346px;
   height: 288px;
-  background-image: url("teen_before.png");
+  background-image: url("../HomePage/img/teen_before.png");
   padding: 29px;
   margin-left: 25px;
 }
@@ -159,7 +177,7 @@
   position: absolute;
   bottom: 10px;
   left: 50%;
-  background-image: url("down-arrow.png");
+  background-image: url("../HomePage/img/down-arrow.png");
   width: 30px;
   height: 30px;
 }
@@ -201,7 +219,7 @@
   content: "";
   width: 72px;
   height: 108px;
-  background-image: url("line-burst-green.png");
+  background-image: url("../HomePage/img/line-burst-green.png");
   position: absolute;
   background-size: 100% 100%;
   top: 0;
@@ -237,7 +255,7 @@
 
 .top-curved {
   z-index: 2;
-  margin-top: -5.25rem;
+  margin-top: -4.25rem;
   padding-top: 84px;
   position: relative;
   overflow: hidden;
@@ -308,7 +326,7 @@
 }
 
 .left-photo-1 {
-  background-image: url("g.campos.jpg");
+  background-image: url("../HomePage/img/g.campos.jpg");
   width: 267px;
   height: 312px;
   border-radius: 140px 15px 15px;
@@ -321,7 +339,7 @@
   background-size: cover;
 }
 .left-photo-2 {
-  background-image: url("a.argianas.jpeg");
+  background-image: url("../HomePage/img/a.argianas.jpeg");
   width: 157px;
   height: 118px;
   border-radius: 15px 15px 15px 70px;
@@ -334,7 +352,7 @@
 }
 
 .left-photo-3 {
-  background-image: url("p.casthely.jpg");
+  background-image: url("../HomePage/img/p.casthely.jpg");
   width: 171px;
   height: 162px;
   border-radius: 15px 15px 70px;
@@ -353,7 +371,7 @@
 }
 .how-it-works::before {
   content: "";
-  background-image: url("divider-right.png");
+  background-image: url("../HomePage/img/divider-right.png");
   width: 100%;
   height: 112px;
   background-repeat: no-repeat;
@@ -397,7 +415,7 @@
   align-items: center;
 }
 .card1-img {
-  background-image: url("image-how-it-works-1.png");
+  background-image: url("../HomePage/img/image-how-it-works-1.png");
   height: 356px;
   width: 100%;
   background-size: cover;
@@ -424,7 +442,7 @@
   justify-content: center;
 }
 .arrow-down-img {
-  background-image: url("arrow-down-green.png");
+  background-image: url("../HomePage/img/arrow-down-green.png");
   width: 40px;
   height: 55px;
   background-size: cover;
@@ -439,7 +457,7 @@
   align-items: center;
 }
 .card2-img {
-  background-image: url("image-how-it-works-2.png");
+  background-image: url("../HomePage/img/image-how-it-works-2.png");
   height: 356px;
   width: 100%;
   background-size: cover;
@@ -469,7 +487,7 @@
   align-items: center;
 }
 .card3-img {
-  background-image: url("image-how-it-works-3.png");
+  background-image: url("../HomePage/img/image-how-it-works-3.png");
   height: 356px;
   width: 100%;
   background-size: cover;
@@ -491,7 +509,7 @@
 }
 
 .reviews::before {
-  background-image: url("divider-main-3.png");
+  background-image: url("../HomePage/img/divider-main-3.png");
   content: "";
   background-size: 100% 100%;
   height: 112px;
@@ -500,7 +518,7 @@
 }
 
 .reviews-container {
-  background-image: url("yellow-curve.svg");
+  background-image: url("../HomePage/img/yellow-curve.svg");
   background-size: 100% 100%;
   position: relative;
   width: 100%;
